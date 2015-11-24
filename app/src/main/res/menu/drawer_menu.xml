@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:checked="false"
+            android:onClick="onDrawerMenuClick"
+            android:id="@+id/buttonSimpleNotes"
+            android:title="Open simple notes" />
+        <item
+            android:onClick="onDrawerMenuClick"
+            android:checked="false"
+            android:id="@+id/buttonTodos"
+            android:title="Open To Do lists" />
+
+        <item
+            android:onClick="onDrawerMenuClick"
+            android:checked="false"
+            android:id="@+id/buttonTasks"
+            android:title="Open tasks" />
+        <item
+            android:onClick="onDrawerMenuClick"
+            android:checked="false"
+            android:id="@+id/buttonSettings"
+            android:title="Settings" />
+
+//TODO
+        //make it happen please
+
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search" />
+
+
+    </group>
+</menu>

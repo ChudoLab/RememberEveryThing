@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/timepickerLayout"
+        android:layout_width="match_parent"
+        android:padding="15dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/wantReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Do you want to set reminder?" />
+        <TextView
+            android:id="@+id/timeShow"
+            android:visibility="gone"
+            android:layout_below="@+id/wantReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/butReminder"
+            android:text="Yes"
+            android:onClick="onClick"
+            android:layout_below="@+id/timeShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TimePicker
+            android:id="@+id/timepicker"
+            android:timePickerMode="clock"
+            android:visibility="gone"
+            android:layout_below="@+id/butReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TimePicker>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_below="@+id/timepickerLayout"
+        android:id="@+id/datepickerLayout"
+        android:layout_width="match_parent"
+        android:padding="15dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/wantCalendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Do you want to put in Calendar?"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/dateShow"
+            android:visibility="gone"
+            android:layout_below="@+id/wantCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/butCalendar"
+            android:text="Yes"
+            android:layout_below="@+id/dateShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <DatePicker
+            android:id="@+id/pickerdate"
+            android:visibility="gone"
+            android:layout_below="@+id/butCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+        </DatePicker>
+    </RelativeLayout>
+    <Button
+        android:text="OK"
+        android:id="@+id/buttonOkAndGo"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/datepickerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

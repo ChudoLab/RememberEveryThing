@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="D:\forAndroid\Remembereverything\app\libs\bolts-android-1.2.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="44780c2cf98f6a3cf4e77f1234d644758b329201">
+        <dex dex="D:\forAndroid\Remembereverything\app\build\intermediates\pre-dexed\debug\bolts-android-1.2.1-06ccae7e0bce42f405c1c82d904bd0603de9c72a.jar" />
+    </item>
+    <item
+        jar="D:\forAndroid\Remembereverything\app\libs\Parse-1.10.3.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="dfef23b83f8434c6e881096e1ac6d54dc3e52041">
+        <dex dex="D:\forAndroid\Remembereverything\app\build\intermediates\pre-dexed\debug\Parse-1.10.3-069543b80b0f9107ad948bd802608cbcea2fa960.jar" />
+    </item>
+
+</items>
