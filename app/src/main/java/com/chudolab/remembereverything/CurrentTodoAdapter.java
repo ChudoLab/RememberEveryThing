@@ -85,6 +85,9 @@ public class CurrentTodoAdapter extends BaseAdapter {
         delTodo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(listOfTodo.size() == 1){
+                    //TODO make edit text appiar if you delete the last
+                }
                 listOfTodo.remove(position);
                 notifyDataSetChanged();
             }

@@ -230,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (resultCode == RESULT_SIMPLE_NOTE) {
             noteType = RESULT_SIMPLE_NOTE;
+
             gotOptions = new ArrayList<>();
             gotOptions = intent.getStringArrayListExtra("simpleOptions");
 
@@ -244,16 +245,16 @@ public class MainActivity extends AppCompatActivity {
         } else if (resultCode == RESULT_SIMPLE_TODO) {
             noteType = RESULT_SIMPLE_TODO;
             Toast.makeText(MainActivity.this, "todo", Toast.LENGTH_SHORT).show();
-//            gotOptions = new ArrayList<>();
-//            gotOptions = intent.getStringArrayListExtra("simpleOptions");
-//
-//            topicName = (TextView) findViewById(R.id.topicName);
-//            noteName = (TextView) findViewById(R.id.noteName);
-//            topicName.setText("Topic: " + gotOptions.get(1));// because i'm super lazy
-//            noteName.setText("Name: " + gotOptions.get(0));
-//
-//            topicName.setVisibility(View.VISIBLE);
-//            noteName.setVisibility(View.VISIBLE);
+            gotOptions = new ArrayList<>();
+            gotOptions = intent.getStringArrayListExtra("simpleOptions");
+
+            topicName = (TextView) findViewById(R.id.topicName);
+            noteName = (TextView) findViewById(R.id.noteName);
+            topicName.setText("Topic: " + gotOptions.get(1));// because i'm super lazy
+            noteName.setText("Name: " + gotOptions.get(0));
+
+            topicName.setVisibility(View.VISIBLE);
+            noteName.setVisibility(View.VISIBLE);
 
             ArrayList listOfDoing = new ArrayList();
             ListView currentTodoList = (ListView)findViewById(R.id.currentTodoNoteText);
