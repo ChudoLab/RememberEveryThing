@@ -22,6 +22,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.chudolab.remembereverything.R;
+import com.chudolab.remembereverything.Singleton;
 
 import java.util.ArrayList;
 
@@ -36,12 +37,7 @@ public class TabSimpleNote extends Fragment {
 
         //TODO
         //remove it
-        existingTopics = new ArrayList<>();
-        existingTopics.add("Thoughts");
-        existingTopics.add("Ideas");
-        existingTopics.add("Recipes");
-        existingTopics.add("Passwords");
-        existingTopics.add("Favorite cat names");
+        existingTopics = Singleton.getInstance().getSubjects();
 
         final ArrayAdapter<String> topicAdapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, existingTopics);
         topicAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -67,11 +63,36 @@ public class TabSimpleNote extends Fragment {
             public void onClick(View view) {
                 EditText newName = (EditText) v.findViewById(R.id.addName);
                 EditText newTopic = (EditText) v.findViewById(R.id.addTopic);
-                Switch makeTodo = (Switch)v.findViewById(R.id.wantTodo);
+                Switch makeTodo = (Switch) v.findViewById(R.id.wantTodo);
 
                 String newNameResult = newName.getText().toString();
                 String newTopicResult = newTopic.getText().toString();
                 Boolean makeTodoResult = makeTodo.isChecked();
+
+                Log.e("newTopic Res", newTopicResult);
+                Log.e("size befor", "" + existingTopics.size());
+
+                if(existingTopics.size()!=0) {
+                    for (int i = 0; i < existingTopics.size(); i++) {
+
+
+                        if (existingTopics.get(i).equals(newTopicResult) != true) {
+                            existingTopics.add(newTopicResult);
+                            Log.e("added", newTopicResult);
+                            Singleton.getInstance().setSubjects(existingTopics);
+                            topicAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.e("equal?", "" + existingTopics.get(i).equals(newTopicResult));
+                        }
+                    }
+                }
+                else  {
+                    existingTopics.add(newTopicResult);
+                    Log.e("added", newTopicResult);
+                    Singleton.getInstance().setSubjects(existingTopics);
+                    topicAdapter.notifyDataSetChanged();
+                }
+                Log.e("size", "" + existingTopics.size());
 
                 ArrayList<String> optionsSelected = new ArrayList<>();
 
@@ -87,15 +108,15 @@ public class TabSimpleNote extends Fragment {
                 }
 
                 Intent intent = new Intent();
-                intent.putStringArrayListExtra("simpleOptions", optionsSelected);
-                getActivity().setIntent(intent);
 
-                if(!makeTodoResult){
+                if (!makeTodoResult) {
                     getActivity().setResult(RESULT_SIMPLE_NOTE, intent);
-                }
-                else {
+                } else {
                     getActivity().setResult(RESULT_SIMPLE_TODO, intent);
                 }
+
+                intent.putStringArrayListExtra("simpleOptions", optionsSelected);
+                getActivity().setIntent(intent);
 
                 getActivity().finish();
             }
