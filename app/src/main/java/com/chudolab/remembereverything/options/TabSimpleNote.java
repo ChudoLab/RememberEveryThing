@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.chudolab.remembereverything.R;
@@ -66,8 +67,11 @@ public class TabSimpleNote extends Fragment {
             public void onClick(View view) {
                 EditText newName = (EditText) v.findViewById(R.id.addName);
                 EditText newTopic = (EditText) v.findViewById(R.id.addTopic);
+                Switch makeTodo = (Switch)v.findViewById(R.id.wantTodo);
+
                 String newNameResult = newName.getText().toString();
                 String newTopicResult = newTopic.getText().toString();
+                Boolean makeTodoResult = makeTodo.isChecked();
 
                 ArrayList<String> optionsSelected = new ArrayList<>();
 
@@ -81,11 +85,18 @@ public class TabSimpleNote extends Fragment {
                 } else {
                     optionsSelected.add(topicAdapter.getItem(spinner.getSelectedItemPosition()));
                 }
+
                 Intent intent = new Intent();
                 intent.putStringArrayListExtra("simpleOptions", optionsSelected);
                 getActivity().setIntent(intent);
 
-                getActivity().setResult(1, intent);
+                if(!makeTodoResult){
+                    getActivity().setResult(RESULT_SIMPLE_NOTE, intent);
+                }
+                else {
+                    getActivity().setResult(RESULT_SIMPLE_TODO, intent);
+                }
+
                 getActivity().finish();
             }
 

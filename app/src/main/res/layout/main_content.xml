@@ -67,12 +67,18 @@
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:padding="20dp"
+        android:visibility="visible"
         android:layout_below="@+id/deleteReminder"
         android:hint="Type your note" />
+    <ListView
+        android:id="@+id/currentTodoNoteText"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/currentNoteText"
+        android:layout_height="wrap_content"></ListView>
     <Button
         android:id="@+id/sendToCalendar"
         android:onClick="sendToCalendar"
-        android:layout_below="@id/currentNoteText"
+        android:layout_below="@id/currentTodoNoteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

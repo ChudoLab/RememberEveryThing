@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.chudolab.remembereverything.R;
@@ -54,6 +55,7 @@ public class ToDoAdapter extends BaseAdapter {
         CheckBox cbDoing = (CheckBox) layoutOfNote.findViewById(R.id.checkBox);
         cbDoing.setText(listOfDoing.get(position) + listOfDoing.size() + " " + position);
         cbDoing.setTextColor(Color.BLACK);
+
 
 
         return layoutOfNote;
