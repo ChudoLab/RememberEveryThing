@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,13 +16,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chudolab.remembereverything.lists_of_notes.SimpleListActivity;
 import com.chudolab.remembereverything.lists_of_notes.TasksListActivity;
+import com.chudolab.remembereverything.lists_of_notes.ToDoAdapter;
 import com.chudolab.remembereverything.lists_of_notes.ToDoListActivity;
 import com.chudolab.remembereverything.options.Options;
 import com.parse.ParseException;
@@ -83,20 +86,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //currentNoteText = (EditText)findViewById(R.id.currentNoteText);
-        currentNoteText = new EditText(getApplicationContext());
-        currentNoteText.setOnKeyListener(new EditText.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    Toast.makeText(MainActivity.this, "clicked enter", Toast.LENGTH_SHORT).show();
-                    Log.e("wow", "clicked");
-                    return true;
-                }
-                Log.e("wow", "clicked out");
-                return false;
-            }
-        });
+
 
     }
 
@@ -122,14 +112,28 @@ public class MainActivity extends AppCompatActivity {
                 calendar.getTimeInMillis(), pendingIntent);
 
     }
-    public void sendToCalendar (View v){
-        Intent intent = new Intent(Intent.ACTION_EDIT);
-        intent.addCategory(Intent.CATEGORY_APP_CALENDAR);
-        intent.setType("vnd.android.cursor.item/event");
-        intent.putExtra("title", "Some title");
-        intent.putExtra("description", "Some description");
-        intent.putExtra("beginTime", System.currentTimeMillis());
-        intent.putExtra("endTime", System.currentTimeMillis());
+
+    public void sendToCalendar(View v) {
+        long startMillis = 0;
+        long endMillis = 0;
+        Calendar beginTime = Calendar.getInstance();
+        beginTime.set(2012, 9, 14, 7, 30);
+        startMillis = beginTime.getTimeInMillis();
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(2012, 9, 14, 8, 45);
+        endMillis = endTime.getTimeInMillis();
+
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setType("vnd.android.cursor.item/event")
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
+                .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false)
+
+                .putExtra(CalendarContract.Events.TITLE, "My Awesome Event")
+                .putExtra(CalendarContract.Events.DESCRIPTION, "Heading out with friends to do something awesome.")
+                .putExtra(CalendarContract.Events.RRULE, "FREQ=DAILY;COUNT=1") //The recurrence rule for the event. Column name. Somehow it works
+                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+                .putExtra(CalendarContract.Events.ACCESS_LEVEL, CalendarContract.Events.ACCESS_PRIVATE);
         startActivity(intent);
     }
 
@@ -142,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             if (!resCurrentNote.isEmpty()) {
                 po = new ParseObject("SimpleNotes");
 
-               if (noteType == RESULT_SIMPLE_NOTE) {
+                if (noteType == RESULT_SIMPLE_NOTE) {
 
                     if (!gotOptions.get(0).isEmpty()) {
                         po.put("name", gotOptions.get(0));
@@ -159,21 +163,21 @@ public class MainActivity extends AppCompatActivity {
                 if (noteType == RESULT_TAB_TASK) {
                     if (times != null) {
 
-                        po.put("text", resCurrentNote);
-
-                        po.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if (e == null) {
-                                    Toast.makeText(getApplicationContext(), "Saved ", Toast.LENGTH_SHORT).show();
-                                    currentNoteId = po.getObjectId();
-                                    Log.e("current Id", currentNoteId);
-
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Error ", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+//                        po.put("text", resCurrentNote);
+//
+//                        po.saveInBackground(new SaveCallback() {
+//                            @Override
+//                            public void done(ParseException e) {
+//                                if (e == null) {
+//                                    Toast.makeText(getApplicationContext(), "Saved ", Toast.LENGTH_SHORT).show();
+//                                    currentNoteId = po.getObjectId();
+//                                    Log.e("current Id", currentNoteId);
+//
+//                                } else {
+//                                    Toast.makeText(getApplicationContext(), "Error ", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
                         setNotification(times, currentNoteText.getText().toString(), currentNoteId);
                         finish();
                     }
@@ -239,8 +243,28 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (resultCode == RESULT_SIMPLE_TODO) {
             noteType = RESULT_SIMPLE_TODO;
+            Toast.makeText(MainActivity.this, "todo", Toast.LENGTH_SHORT).show();
+//            gotOptions = new ArrayList<>();
+//            gotOptions = intent.getStringArrayListExtra("simpleOptions");
+//
+//            topicName = (TextView) findViewById(R.id.topicName);
+//            noteName = (TextView) findViewById(R.id.noteName);
+//            topicName.setText("Topic: " + gotOptions.get(1));// because i'm super lazy
+//            noteName.setText("Name: " + gotOptions.get(0));
+//
+//            topicName.setVisibility(View.VISIBLE);
+//            noteName.setVisibility(View.VISIBLE);
 
-            Toast.makeText(MainActivity.this, "TODO", Toast.LENGTH_SHORT).show();
+            ArrayList listOfDoing = new ArrayList();
+            ListView currentTodoList = (ListView)findViewById(R.id.currentTodoNoteText);
+            CurrentTodoAdapter toDoAdapter = new CurrentTodoAdapter(getApplicationContext(), listOfDoing);
+            currentTodoList.setAdapter(toDoAdapter);
+
+            currentNoteText = (EditText)findViewById(R.id.currentNoteText);
+            currentNoteText.setVisibility(View.GONE);
+            currentTodoList.setVisibility(View.VISIBLE);
+
+
 
         } else if (resultCode == RESULT_TAB_TASK) {
 

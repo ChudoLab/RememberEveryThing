@@ -1,71 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="20dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="20dp">
 
 
     <TextView
         android:id="@+id/wantTopic"
-        android:textSize="20sp"
-        android:text="Do you want to set a topic?"
-        android:layout_marginBottom="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="Do you want to set a topic?"
+        android:textSize="20sp" />
+
     <EditText
-        android:hint="Add a new topic"
         android:id="@+id/addTopic"
-        android:paddingLeft="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/wantTopic"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="50dp"
         android:layout_marginStart="50dp"
-        android:layout_below="@+id/wantTopic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:hint="Add a new topic"
+        android:paddingLeft="50dp" />
+
     <Spinner
         android:id="@+id/existingTopics"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginBottom="15dp"
-        android:layout_below="@+id/addTopic"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </Spinner>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addTopic"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"></Spinner>
+
     <TextView
         android:id="@+id/wantName"
-        android:textSize="20sp"
-        android:text="Do you want to set a name?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/existingTopics"
         android:layout_marginBottom="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:text="Do you want to set a name?"
+        android:textSize="20sp" />
+
     <EditText
-        android:hint="Add a note name"
         android:id="@+id/addName"
-        android:paddingLeft="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/wantName"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="50dp"
         android:layout_marginStart="50dp"
-        android:layout_below="@+id/wantName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:hint="Add a note name"
+        android:paddingLeft="50dp" />
 
-    <CheckBox
+    <Switch
         android:id="@+id/wantTodo"
-        android:text="Make it To Do list?"
-        android:layout_marginBottom="20dp"
-        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/addName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_marginBottom="20dp"
+        android:text="Make ToDo list"
+        android:textSize="20dp" />
+    <!--<CheckBox-->
+    <!--android:id="@+id/wantTodo"-->
+    <!--android:text="Make it To Do list?"-->
+    <!--android:layout_marginBottom="20dp"-->
+    <!--android:textSize="20dp"-->
+    <!--android:layout_below="@+id/addName"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
     <Button
         android:id="@+id/buttonOkAndGo"
-        android:text="Ok"
-        android:layout_below="@+id/wantTodo"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/wantTodo"
+        android:layout_marginTop="20dp"
+        android:text="Ok" />
 
 
 </RelativeLayout>
