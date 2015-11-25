@@ -86,7 +86,7 @@ public class TabSimpleNote extends Fragment {
                         }
                     }
                 }
-                else {
+                else  {
                     existingTopics.add(newTopicResult);
                     Log.e("added", newTopicResult);
                     Singleton.getInstance().setSubjects(existingTopics);

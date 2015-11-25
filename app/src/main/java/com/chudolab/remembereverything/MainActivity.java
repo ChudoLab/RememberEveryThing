@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     final static int RESULT_TAB_TASK = 3;
     private TextView calendarShow;
     private TextView reminderShow;
-    private TextView topicName;
+    private TextView topicName ;
     private TextView noteName;
     private int noteType;
     private int[] times;
