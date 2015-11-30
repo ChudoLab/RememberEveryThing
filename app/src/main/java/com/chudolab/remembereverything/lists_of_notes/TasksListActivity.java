@@ -4,10 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.chudolab.remembereverything.R;
@@ -19,23 +21,33 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TasksListActivity extends AppCompatActivity {
+
     ArrayList<Note> taskList;
-    GridView lvTasks;
+    RecyclerView rvTasks;
     ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks_list);
-        lvTasks = (GridView) findViewById(R.id.lvTasks);
+        rvTasks = (RecyclerView) findViewById(R.id.lvTasks);
+
+        GridLayoutManager linearLayoutManager = new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false);
+        rvTasks.setLayoutManager(linearLayoutManager);
         taskList = Singleton.getInstance().getTaskNotes();
-        NoteAdapter adapter = new NoteAdapter(getApplicationContext(), taskList, R.layout.task_note_for_list, R.id.tvNameTask, R.id.tvDisTask, R.id.tvTextTask);
-        lvTasks.setAdapter(adapter);
+        final NoteMovieAdapter adapter = new NoteMovieAdapter(this,"Task",taskList,R.layout.task_note_for_list,R.id.tvNameTask,R.id.tvDisTask,R.id.tvTextTask);
+        rvTasks.setAdapter(adapter);
+        ItemTouchHelper.Callback callback = new NoteTouchHelper(adapter);
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(rvTasks);
+
+        //ParseUser.getCurrentUser();
         ParseQuery<ParseObject> pq = ParseQuery.getQuery("TaskNotes");
 
         dialog = new ProgressDialog(this);
@@ -57,8 +69,9 @@ public class TasksListActivity extends AppCompatActivity {
                                 list.get(i).getDate("date")
                         );
                         taskList.add(taskNote);
+                        //adapter.add(taskNote);
                     }
-                    lvTasks.invalidateViews();
+                    adapter.notifyDataSetChanged();
                     dialog.cancel();
                 } else {
                     Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
@@ -66,13 +79,11 @@ public class TasksListActivity extends AppCompatActivity {
 
             }
         });
-        lvTasks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), TaskNoteActivity.class);
-                intent.putExtra("position", position);
-                startActivity(intent);
-            }
-        });
+
+    }
+
+
+    public static void remove(int i){
+        Singleton.getInstance().getTaskNotes().remove(i-1);
     }
 }
