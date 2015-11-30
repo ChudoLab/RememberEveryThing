@@ -15,15 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         <activity
-            android:name=".MainActivity"
+            android:name=".old_main.MainActivity"
             android:windowSoftInputMode="adjustResize" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".options.Options" />
+        <activity android:name=".old_main.Options" />
         <activity android:name=".lists_of_notes.SimpleListActivity" />
         <activity android:name=".lists_of_notes.TasksListActivity" />
         <activity android:name=".lists_of_notes.ToDoListActivity" />
@@ -31,11 +26,20 @@
         <activity android:name=".one_note_show.ToDoNoteActivity" />
         <activity android:name=".one_note_show.TaskNoteActivity" />
 
-        <receiver android:name=".AlarmReceiver" >
-        </receiver>
+        <receiver android:name=".options.AlarmReceiver" />
 
-        <activity android:name=".ListOfSubjectActivity" >
+        <activity android:name=".ListOfSubjectActivity" />
+        <activity android:name=".main_page.MainPageActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <!-- <activity android:name=".CurrentNoteCreateActivity" > -->
+        <!-- </activity> -->
+        <!-- <activity android:name=".main_page.OptionsTab" > -->
+        <!-- </activity> -->
     </application>
 
 </manifest>

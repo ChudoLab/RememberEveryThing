@@ -1,4 +1,4 @@
-package com.chudolab.remembereverything.options;
+package com.chudolab.remembereverything.main_page;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,11 +25,11 @@ public class ViewPagerAdapter extends  FragmentStatePagerAdapter {
 
         if (position == 0)
         {
-            TabSimpleNote tabSimpleNote = new TabSimpleNote();
-            return tabSimpleNote;
+            CurrentNoteTab currentNoteTab = new CurrentNoteTab();
+            return currentNoteTab;
         }else {
-            TabTask tabTask = new TabTask();
-            return tabTask;
+            OptionsTab optionsTab = new OptionsTab();
+            return optionsTab;
         }
     }
 

@@ -23,7 +23,7 @@ public class ListOfSubjectActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_of_subject);
+        setContentView(R.layout.activity_list_of_subjects);
         lvSubjects = (ListView) findViewById(R.id.lvSubjects);
         SubjectAdapter adapter = new SubjectAdapter(getApplicationContext());
         lvSubjects.setAdapter(adapter);
