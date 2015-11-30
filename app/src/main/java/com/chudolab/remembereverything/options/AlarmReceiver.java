@@ -1,4 +1,4 @@
-package com.chudolab.remembereverything;
+package com.chudolab.remembereverything.options;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -8,6 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import com.chudolab.remembereverything.R;
+import com.chudolab.remembereverything.main_page.MainPageActivity;
+
 
 /**
  * Created by Chudo on 22.11.2015.
@@ -20,7 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         int notificationId = Integer.parseInt(noteId);
         String currentNoteText = intent.getStringExtra("currentNoteText");
 
-        Intent intentOpen = new Intent(context, MainActivity.class);
+        Intent intentOpen = new Intent(context, MainPageActivity.class);
         PendingIntent pending = PendingIntent.getActivity(context, 0, intentOpen, 0);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(

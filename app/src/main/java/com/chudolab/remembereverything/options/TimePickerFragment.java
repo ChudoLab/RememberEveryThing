@@ -5,10 +5,13 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 
+import java.util.Calendar;
+
 /**
  * Created by Chudo on 17.11.2015.
  */
 public class TimePickerFragment extends DialogFragment {
+
     TimePickerDialog.OnTimeSetListener onTimeSet;
 
     private int hours;
@@ -26,10 +29,12 @@ public class TimePickerFragment extends DialogFragment {
         super.setArguments(args);
         hours = args.getInt("hours");
         minutes = args.getInt("minutes");
+
+
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return new TimePickerDialog(getActivity(), onTimeSet, hours, minutes, true);
+                return new TimePickerDialog(getActivity(), onTimeSet, hours, minutes, true);
     }
 }
