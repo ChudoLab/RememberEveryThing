@@ -27,7 +27,7 @@ public class ListOfSubjectActivity extends AppCompatActivity {
         lvSubjects = (ListView) findViewById(R.id.lvSubjects);
         SubjectAdapter adapter = new SubjectAdapter(getApplicationContext());
         lvSubjects.setAdapter(adapter);
-//adding topics
+            //adding topics
         Singleton.getInstance().getSubjects().removeAll(Singleton.getInstance().getSubjects());
         Singleton.getInstance().getSubjects().add("Shopping");
         Singleton.getInstance().getSubjects().add("Thoughts");
