@@ -10,6 +10,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.chudolab.remembereverything.R;
@@ -30,7 +31,13 @@ public class ToDoListActivity extends AppCompatActivity {
     ProgressDialog dialog;
     RecyclerView rvToDo;
     ArrayList<Note> toDoList;
+    NoteMovieAdapter adapter;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.notifyDataSetChanged();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,49 +48,14 @@ public class ToDoListActivity extends AppCompatActivity {
         rvToDo.setLayoutManager(linearLayoutManager);
         toDoList = Singleton.getInstance().getToDoNotes();
 
-        final NoteMovieAdapter adapter = new NoteMovieAdapter(this, "ToDo", toDoList, R.layout.todo_note_for_list, R.id.tvToDoName, R.id.lvDoing);
+        adapter = new NoteMovieAdapter(this, "ToDo", toDoList, R.layout.todo_note_for_list, R.id.tvToDoName, R.id.lvDoing);
         rvToDo.setAdapter(adapter);
 
         ItemTouchHelper.Callback callback = new NoteTouchHelper(adapter);
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(rvToDo);
 
-        ParseQuery<ParseObject> pq = ParseQuery.getQuery("ToDoNotes");
-
-        dialog = new ProgressDialog(this);
-        dialog.setTitle("Downloading notes");
-        dialog.show();
-
-        pq.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
-                if (e == null) {
-                    Singleton.getInstance().refresh(toDoList);
-                    adapter.listOfNotes.removeAll(adapter.listOfNotes);
-                    for (int i = 0; i < list.size(); i++) {
-                        ToDoNote toDoNote = new ToDoNote(
-                                list.get(i).getObjectId(),
-                                list.get(i).getUpdatedAt(),
-                                list.get(i).getCreatedAt(),
-                                list.get(i).getString("name"),
-                                list.get(i).getString("text"),
-                                list.get(i).getInt("period"),
-                                ((ArrayList) list.get(i).getList("doing"))
-                        );
-                        toDoList.add(toDoNote);
-                    }
-                    adapter.notifyDataSetChanged();
-                    dialog.cancel();
-                } else {
-                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                }
-
-            }
-        });
 
     }
-    public static void remove(int i){
 
-        //Singleton.getInstance().getToDoNotes().remove(i);
-    }
 }

@@ -13,10 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="date: "
-        android:id="@+id/tvDisTask" />
+        android:id="@+id/tvDateTask" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="date: "
+        android:id="@+id/tvTimeTask" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="text: "
         android:id="@+id/tvTextTask" />
+
+
 </LinearLayout>

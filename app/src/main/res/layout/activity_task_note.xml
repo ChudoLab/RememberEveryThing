@@ -6,8 +6,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.asus.noties.TaskNoteActivity">
-    <ListView
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="name: "
+        android:id="@+id/etNameTask" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="date: "
+        android:id="@+id/etDateTask"
+        android:layout_below="@id/etNameTask"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="time: "
+        android:id="@+id/etTimeTask"
+        android:layout_below="@id/etDateTask"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="text: "
+        android:id="@+id/etTextTask"
+        android:layout_below="@id/etTimeTask"/>
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lvToDo"></ListView>
+        android:text="SAVE"
+
+        android:id="@+id/btnSaveTaskNote"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

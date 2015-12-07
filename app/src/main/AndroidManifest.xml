@@ -15,8 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         <activity
+            android:name=".Main2Activity"
+            android:windowSoftInputMode="adjustResize" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        <activity
             android:name=".old_main.MainActivity"
             android:windowSoftInputMode="adjustResize" >
+           
         </activity>
         <activity android:name=".old_main.Options" />
         <activity android:name=".lists_of_notes.SimpleListActivity" />
@@ -30,16 +39,13 @@
 
         <activity android:name=".ListOfSubjectActivity" />
         <activity android:name=".main_page.MainPageActivity" >
+        <activity android:name=".LoginSingupActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- <activity android:name=".CurrentNoteCreateActivity" > -->
-        <!-- </activity> -->
-        <!-- <activity android:name=".main_page.OptionsTab" > -->
-        <!-- </activity> -->
     </application>
 
 </manifest>

@@ -10,16 +10,22 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chudolab.remembereverything.R;
+import com.chudolab.remembereverything.Singleton;
 import com.chudolab.remembereverything.one_note_show.SimpleNoteActivity;
 import com.chudolab.remembereverything.one_note_show.TaskNoteActivity;
 import com.chudolab.remembereverything.one_note_show.ToDoNoteActivity;
 import com.chudolab.remembereverything.type_of_notes.Note;
 import com.chudolab.remembereverything.type_of_notes.ToDoNote;
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -116,15 +122,36 @@ public class NoteMovieAdapter extends RecyclerView.Adapter<NoteMovieAdapter.View
     }
 
     public void remove(int position) {
-        //listOfNotes.remove(position);
+        Note note =listOfNotes.get(position);
+        ParseUser user = ParseUser.getCurrentUser();
         if(name.equals("Simple")){
-            //Singleton.getInstance().getSimpleNotes().remove(position);
+            ParseObject object = ParseObject.createWithoutData("SimpleNotes", note.getObjectId());
+            object.deleteInBackground();
+            Singleton.getInstance().getSimpleNotes().remove(note);
+            notifyItemRemoved(position);
         }else if(name.equals("ToDo")){
-            // ToDoListActivity.remove(position);
+            ParseObject object = ParseObject.createWithoutData("ToDoNotes", note.getObjectId());
+            object.deleteInBackground(new DeleteCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                }
+            });
+            Singleton.getInstance().getToDoNotes().remove(note);
+            notifyItemRemoved(position);
+            notifyDataSetChanged();
         }else if(name.equals("Task")){
-            // TasksListActivity.remove(position);
+            ParseObject object = ParseObject.createWithoutData("TaskNotes", note.getObjectId());
+            object.deleteInBackground(new DeleteCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                }
+            });
+            Singleton.getInstance().getTaskNotes().remove(note);
+            notifyItemRemoved(position);
         }
-        notifyItemRemoved(position);
+
     }
 
     public void add(Note note){
@@ -145,7 +172,7 @@ public class NoteMovieAdapter extends RecyclerView.Adapter<NoteMovieAdapter.View
 
         //public final ImageView doing;
 
-        public ViewHolder(View view){
+        public ViewHolder(final View view){
             super(view);
             if (idOfDoingList==0) {
                 tvNoteName = (TextView) view.findViewById(idOfNoteName);
@@ -159,15 +186,18 @@ public class NoteMovieAdapter extends RecyclerView.Adapter<NoteMovieAdapter.View
                 tvText=null;
                 tvNoteName = (TextView) view.findViewById(idOfNoteName);
                 lvDoing = (ListView) view.findViewById(R.id.lvDoing);
-            } view.setOnClickListener(new View.OnClickListener() {
+            }
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, noteActivity);
+                  Intent intent = new Intent(context, noteActivity);
                     intent.putExtra("position",getAdapterPosition());
-                    context.startActivity(intent);
+                   context.startActivity(intent);
+
                 }});
 
         }
+
 
         public void bindMovie(Note note){
             if (idOfDoingList == 0) {
