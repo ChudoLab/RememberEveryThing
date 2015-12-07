@@ -171,9 +171,9 @@ public class NoteMovieAdapter extends RecyclerView.Adapter<NoteMovieAdapter.View
 
         public void bindMovie(Note note){
             if (idOfDoingList == 0) {
-                tvNoteName.setText(note.getName());
-                tvText.setText(note.getText());
-                tvNoteDescription.setText(note.getDescription());
+                tvNoteName.setText("Name: "+note.getName());
+                tvText.setText("Topic: "+note.getText());
+                tvNoteDescription.setText("poka tak");
             }else{
                 tvNoteName.setText(note.getName());
                 lvDoing.setAdapter(new ToDoAdapter(context, R.layout.doing_for_list,  ((ToDoNote)note).getDoing()));

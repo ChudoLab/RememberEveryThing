@@ -1,79 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.chudolab.remembereverything.main_page.OptionsTab">
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        android:theme="@style/AppBaseTheme"
+        tools:context="com.chudolab.remembereverything.main_page.OptionsTab">
 
 
-    <Switch
-        android:id="@+id/wantTopic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Set a topic?" />
+        <Switch
+            android:id="@+id/wantTopic"
+            style="@style/mySwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set a topic?" />
 
-    <Switch
-        android:id="@+id/wantName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/wantTopic"
-        android:text="Set a name?" />
-
-    <Switch
-        android:id="@+id/wantTodo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/wantName"
-        android:text="Make ToDo list" />
-
-    <Switch
-        android:id="@+id/wantReminder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/wantTodo"
-        android:text="Do you want to set reminder?" />
-
-    <TextView
-        android:id="@+id/timeShow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/wantReminder"
-        android:visibility="gone" />
-
-    <TimePicker
-        android:id="@+id/timepicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/timeShow"
-        android:timePickerMode="clock"
-        android:visibility="gone"></TimePicker>
-
-    <Switch
-        android:id="@+id/wantCalendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/timepicker"
-        android:text="Do you want to put in Calendar?" />
-
-    <TextView
-        android:id="@+id/dateShow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/wantCalendar"
-        android:visibility="gone" />
+        <View style="@style/divider" />
 
 
-    <DatePicker
-        android:id="@+id/pickerdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dateShow"
-        android:visibility="gone"></DatePicker>
+        <Switch
+            android:id="@+id/wantName"
+            style="@style/mySwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set a name?" />
+
+        <View style="@style/divider" />
+
+        <Switch
+            android:id="@+id/wantTodo"
+            style="@style/mySwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Make ToDo list" />
+
+        <View style="@style/divider" />
 
 
-</RelativeLayout>
+        <Switch
+            android:id="@+id/ifRemind"
+            style="@style/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remind you?" />
 
+        <LinearLayout
+            android:id="@+id/reminderLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <Switch
+                android:id="@+id/ifTodayReminder"
+                style="@style/mySwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Today?" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/timeShow"
+                    style="@style/editText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pick a time:"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/setTime"
+                    android:layout_width="60dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@+id/timeShow"
+                    android:background="@drawable/button"
+                    android:text="Set time"
+                    android:textColor="@color/textColorMain"
+                    android:textSize="@dimen/bodyFontSmall" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/dateShow"
+                    style="@style/editText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/setDate"
+                    android:layout_width="60dp"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/dateShow"
+                    android:background="@drawable/button"
+                    android:text="Set date"
+                    android:textColor="@color/textColorMain"
+                    android:textSize="@dimen/bodyFontSmall"
+                    android:visibility="gone" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <Switch
+                android:id="@+id/wantReminder"
+                style="@style/mySwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Send notification?" />
+
+            <ImageView
+                android:id="@+id/imageReminder"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@+id/wantReminder"
+                android:background="@drawable/ic_action_alarms"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+            <TimePicker
+                android:id="@+id/timepicker"
+                style="@style/AppBaseTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/timeShow"
+                android:timePickerMode="clock"
+                android:visibility="gone"></TimePicker>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:id="@+id/wantCalendar"
+                    style="@style/mySwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Put in Calendar?" />
+
+                <ImageView
+                    android:id="@+id/imageCalendar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_toRightOf="@+id/wantCalendar"
+                    android:background="@drawable/ic_action_go_to_today"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <DatePicker
+                android:id="@+id/pickerdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dateShow"
+                android:visibility="gone"></DatePicker>
+        </LinearLayout>
+
+        <View style="@style/divider" />
+    </LinearLayout>
+</ScrollView>

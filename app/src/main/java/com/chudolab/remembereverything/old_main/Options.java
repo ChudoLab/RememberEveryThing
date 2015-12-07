@@ -30,7 +30,7 @@
 //        setContentView(R.layout.activity_options);
 //
 //        options = new ArrayList();
-//        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+//        toolbar = (Toolbar) findViewById(R.id.my_tool_bar);
 //        setSupportActionBar(toolbar);
 //        getSupportActionBar().setTitle("Options");
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);

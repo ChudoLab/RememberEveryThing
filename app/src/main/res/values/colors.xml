@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--<color name="colorPrimary">#3F51B5</color>-->
+    <color name="colorPrimaryDark">#2667bc</color>
     <color name="colorPrimary">#6997D3</color>
    <!--<color name="colorPrimaryDark">#303F9F</color>-->
-    <color name="colorPrimaryDark">#FFFEC8</color>
+    <color name="colorPrimaryLight">#FFFEC8</color>
     <!--<color name="colorAccent">#FF4081</color>-->
     <color name="colorAccent">#F36E92</color>
+    <color name="colorAdditional">#FF757575</color>
+    <color name="colorAdditionalLight">#bebebe</color>
+    <color name="colorCardHolderBack">#E0E0E0</color>
+    <color name="colorBackground">#FFFAFAFA</color>
+    <color name="accent_material_light">#f500b8</color>
+    <color name="colorAccent_material">#f500b8</color>
+    <color name="tabsDivider">#92aac9</color>
+    <color name="textColorMain">#212121</color>
+
 </resources>

@@ -35,13 +35,13 @@ public class ToDoNoteActivity extends AppCompatActivity {
         tvText.setTextColor(Color.BLACK);
 
 //it does'n metter:)
-        Button btnAdd = (Button) findViewById(R.id.btnSaveSimpleNote);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
+//        Button btnAdd = (Button) findViewById(R.id.btnSaveSimpleNote);
+//        btnAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//            }
+//        });
     }
 }
