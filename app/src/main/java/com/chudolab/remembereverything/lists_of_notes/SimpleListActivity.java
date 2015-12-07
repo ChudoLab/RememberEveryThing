@@ -32,23 +32,25 @@ public class SimpleListActivity extends DrawerAppCompatActivity {
     ArrayList<Note> simplesList;
     RecyclerView rvSimpls;
     ProgressDialog dialog;
+    NoteMovieAdapter adapter;
 
     @Override
     protected void onStart() {
         super.onStart();
-        rvSimpls.invalidate();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("simples ", " " + Singleton.getInstance().getSimpleNotes().size());
+
         rvSimpls = (RecyclerView) findViewById(R.id.lvSimple);
         GridLayoutManager linearLayoutManager = new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false);
         rvSimpls.setLayoutManager(linearLayoutManager);
 
         simplesList = Singleton.getInstance().getSimpleNotes();
-        final NoteMovieAdapter adapter = new NoteMovieAdapter(this,"Simple",simplesList,R.layout.simple_note_for_list,R.id.tvSimpleName,R.id.tvSimpleDesc,R.id.tvSimpleText);
+
+         adapter = new NoteMovieAdapter(this,"Simple",simplesList,R.layout.simple_note_for_list,R.id.tvSimpleName,R.id.tvSimpleDesc,R.id.tvSimpleText);
         rvSimpls.setAdapter(adapter);
         ItemTouchHelper.Callback callback = new NoteTouchHelper(adapter);
 
@@ -91,6 +93,10 @@ public class SimpleListActivity extends DrawerAppCompatActivity {
         });
 
     }
+    public static void remove(int i){
+        Singleton.getInstance().getSimpleNotes().remove(i);
+    }
+
     protected void onStop() {
         super.onStop();
 
@@ -117,7 +123,4 @@ public class SimpleListActivity extends DrawerAppCompatActivity {
         return contentView;
     }
 
-    public static void remove(int i){
-        Singleton.getInstance().getSimpleNotes().remove(i);
-    }
 }

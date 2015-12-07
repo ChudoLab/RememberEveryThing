@@ -10,38 +10,47 @@ import android.widget.TextView;
 
 import com.chudolab.remembereverything.R;
 import com.chudolab.remembereverything.Singleton;
+import com.chudolab.remembereverything.type_of_notes.Note;
+import com.parse.ParseObject;
 
 public class ToDoNoteActivity extends AppCompatActivity {
-    EditText tvName;
-    EditText tvText;
-    EditText tvPeriod;
+    EditText name;
+    EditText text;
+    EditText period;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_note);
 
-        int position = getIntent().getIntExtra("position", 0);
+        final int position = getIntent().getIntExtra("position", 0);
 
-        tvName = (EditText) findViewById(R.id.etNameOfSimpleNote);
-        tvPeriod = (EditText) findViewById(R.id.etSubjectOfSimpleNote);
-        tvText = (EditText) findViewById(R.id.etTextOfSimpleNote);
+        name = (EditText) findViewById(R.id.etNameOfSimpleNote);
+        period = (EditText) findViewById(R.id.etSubjectOfSimpleNote);
+        text = (EditText) findViewById(R.id.etTextOfSimpleNote);
 
-        tvName.setText(Singleton.getInstance().getToDoNotes().get(position).getName());
-        tvPeriod.setText(Singleton.getInstance().getToDoNotes().get(position).getDescription());
-        tvText.setText(Singleton.getInstance().getToDoNotes().get(position).getText());
-        tvName.setTextColor(Color.BLACK);
-        tvText.setTextColor(Color.BLACK);
-        tvText.setTextColor(Color.BLACK);
+        name.setText(Singleton.getInstance().getToDoNotes().get(position).getName());
+        period.setText(Singleton.getInstance().getToDoNotes().get(position).getDescription());
+        text.setText(Singleton.getInstance().getToDoNotes().get(position).getText());
+        name.setTextColor(Color.BLACK);
+        text.setTextColor(Color.BLACK);
+        period.setTextColor(Color.BLACK);
 
-//it does'n metter:)
-//        Button btnAdd = (Button) findViewById(R.id.btnSaveSimpleNote);
-//        btnAdd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//            }
-//        });
+        Button btnSave = (Button) findViewById(R.id.btnSaveSimpleNote);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Note note = Singleton.getInstance().getToDoNotes().get(position);
+                ParseObject object = ParseObject.createWithoutData("ToDoNotes", note.getObjectId());
+                object.put("name", name.getText().toString());
+                //object.put("subject", subject.getText().toString());
+                //object.put("text", text.getText().toString());
+                object.saveInBackground();
+                note.setName(name.getText().toString());
+                note.setText(text.getText().toString());
+                // ((TaskNote) note).setSubject(subject.getText().toString());
+                finish();
+            }
+        });
     }
 }
