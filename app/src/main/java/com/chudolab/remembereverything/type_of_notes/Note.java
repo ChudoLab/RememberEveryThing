@@ -6,15 +6,16 @@ import java.util.Date;
  * Created by ASUS on 10.11.2015.
  */
 abstract public class Note {
-    private String id;
+    private String objectId;
     private String name;
     private String text;
     private Date dateOfApdate;
     private Date dateOfCreate;
+   // private String Ob
 
 
     public Note(String id, Date dateOfApdate, Date dateOfCreate, String name, String text) {
-        this.id = id;
+        this.objectId = id;
         this.dateOfApdate = dateOfApdate;
         this.dateOfCreate = dateOfCreate;
         this.name = name;
@@ -34,13 +35,7 @@ abstract public class Note {
         this.text = text;
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -64,6 +59,13 @@ abstract public class Note {
 
     public void setDateOfApdate(Date dateOfCreation) {
         this.dateOfApdate = dateOfCreation;
+    }
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 
     public abstract String getDescription();

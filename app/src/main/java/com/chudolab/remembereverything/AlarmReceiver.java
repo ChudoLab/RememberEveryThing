@@ -20,7 +20,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         int notificationId = Integer.parseInt(noteId);
         String currentNoteText = intent.getStringExtra("currentNoteText");
 
-        Intent intentOpen = new Intent(context, MainActivity.class);
+        Intent intentOpen = new Intent(context, MainPageActivity.class);
         PendingIntent pending = PendingIntent.getActivity(context, 0, intentOpen, 0);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
