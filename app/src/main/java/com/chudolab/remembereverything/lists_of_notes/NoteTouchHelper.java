@@ -6,7 +6,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 /**
  * Created by ASUS on 30.11.2015.
  */
-public class NoteTouchHelper extends ItemTouchHelper.SimpleCallback {
+public class  NoteTouchHelper extends ItemTouchHelper.SimpleCallback {
     private NoteMovieAdapter mMovieAdapter;
 
     public NoteTouchHelper(NoteMovieAdapter movieAdapter){

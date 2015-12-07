@@ -114,27 +114,28 @@
                     android:textSize="@dimen/bodyFontSmall"
                     android:visibility="gone" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <Switch
-                android:id="@+id/wantReminder"
-                style="@style/mySwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Send notification?" />
+                <Switch
+                    android:id="@+id/wantReminder"
+                    style="@style/mySwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Send notification?" />
 
-            <ImageView
-                android:id="@+id/imageReminder"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="30dp"
-                android:layout_toRightOf="@+id/wantReminder"
-                android:background="@drawable/ic_action_alarms"
-                android:visibility="visible" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/imageReminder"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_toRightOf="@+id/wantReminder"
+                    android:background="@drawable/ic_action_alarms"
+                    android:visibility="visible" />
+            </RelativeLayout>
 
             <TimePicker
                 android:id="@+id/timepicker"

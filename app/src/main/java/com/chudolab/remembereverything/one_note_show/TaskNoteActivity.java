@@ -41,6 +41,7 @@ public class TaskNoteActivity extends AppCompatActivity {
         name.setTextColor(Color.BLACK);
         text.setTextColor(Color.BLACK);
         date.setTextColor(Color.BLACK);
+
     }
     //toolbar menu
     @Override

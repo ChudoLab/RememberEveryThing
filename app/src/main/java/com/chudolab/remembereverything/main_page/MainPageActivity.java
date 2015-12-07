@@ -1,7 +1,9 @@
 package com.chudolab.remembereverything.main_page;
 
+import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -12,9 +14,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.chudolab.remembereverything.DrawerAppCompatActivity;
 import com.chudolab.remembereverything.R;
+import com.parse.ParseObject;
 
 import view.SlidingTabLayout;
 
@@ -44,6 +50,7 @@ public class MainPageActivity extends DrawerAppCompatActivity {
             }
         });
     }
+
     //TODO Do i need it?
     @Override
     protected void onStop() {
@@ -53,7 +60,6 @@ public class MainPageActivity extends DrawerAppCompatActivity {
         dr.closeDrawers();
 
     }
-
 
     @Override
     public Toolbar getToolbar() {
@@ -67,7 +73,6 @@ public class MainPageActivity extends DrawerAppCompatActivity {
 
     @Override
     public View getContentView() {
-
         View contentView = getLayoutInflater().inflate(R.layout.activity_main_page, null);
         return contentView;
     }
@@ -124,15 +129,43 @@ public class MainPageActivity extends DrawerAppCompatActivity {
     }
 
     public void onSaveButtonClick(View v) {
-        finish();
+        EditText currentNoteText = (EditText) findViewById(R.id.currentNoteText);
+        Switch ifTodo = (Switch) findViewById(R.id.wantTodo);
+        Switch ifReminder = (Switch) findViewById(R.id.wantReminder);
+        Switch ifCalendar = (Switch) findViewById(R.id.wantCalendar);
+        Switch ifRemind = (Switch) findViewById(R.id.ifRemind);
+        Switch wantName = (Switch)findViewById(R.id.wantName);
+        Switch wantTopic = (Switch)findViewById(R.id.wantTopic);
+        EditText gotTopic = (EditText)findViewById(R.id.addTopic);
+        EditText gotName = (EditText)findViewById(R.id.addName);
+        ParseObject po;
 
-//        if (v.getId() == R.id.buttonSaveClose) {
-//            currentNoteText = (EditText) findViewById(R.id.currentNoteText);
+//        //THIS IS SIMPLE NOTE
+//        if (!ifTodo.isChecked() && !ifRemind.isChecked()) {
 //
 //            String resCurrentNote = currentNoteText.getText().toString();
-//
-//            if (!resCurrentNote.isEmpty()) {
+//            if (!resCurrentNote.isEmpty()) { //if note text is not empty
 //                po = new ParseObject("SimpleNotes");
+//                if(wantName.isChecked() && !gotName.getText().toString().isEmpty()) { //name checked and exist
+//                    po.put("name", gotName.getText().toString());
+//                }
+//                if(wantTopic.isChecked() && !gotTopic.getText().toString().isEmpty()) { //topic checked and exist
+//                    po.put("subject", gotTopic.getText().toString());
+//                }
+//                po.put("text", resCurrentNote);
+//                po.saveInBackground();
+//            }else Toast.makeText(MainPageActivity.this, "Note is empty!", Toast.LENGTH_SHORT).show();
+//
+//            //THIS IS TO DO
+//        } else if (ifTodo.isChecked()) {
+//
+//
+//            //THIS IS TASK
+//        } else if (ifRemind.isChecked()) {
+//
+//
+//        }
+//
 //
 //                if (noteType == RESULT_SIMPLE_NOTE) {
 //
@@ -146,6 +179,11 @@ public class MainPageActivity extends DrawerAppCompatActivity {
 //                } else if (noteType == RESULT_SIMPLE_TODO) {
 //
 //                }
+
+//        if (v.getId() == R.id.buttonSaveClose) {
+//
+//
+//
 //
 //
 //                if (noteType == RESULT_TAB_TASK) {
@@ -191,8 +229,11 @@ public class MainPageActivity extends DrawerAppCompatActivity {
 //            }
 //
 //        }
+
+
+//        po.saveInBackground();
+        finish();
     }
-//
 }
 
 

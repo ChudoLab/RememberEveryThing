@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by Chudo on 24.11.2015.
  */
-public class ToDoAdapter extends BaseAdapter {
+public class  ToDoAdapter extends BaseAdapter {
     private Context context;
     private int idOfNoteView;
     private ArrayList<String> listOfDoing;

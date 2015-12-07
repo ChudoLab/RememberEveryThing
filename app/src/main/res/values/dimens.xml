@@ -7,7 +7,7 @@
     <dimen name="headline">24sp</dimen>
     <dimen name="title">20sp</dimen>
     <dimen name="bodyFont">15sp</dimen>
-    <dimen name="bodyFontSmall">10sp</dimen>
+    <dimen name="bodyFontSmall">10sp </dimen>
     <dimen name="button">14sp</dimen>
 
     <dimen name="lineSpaceBody" >12dip</dimen>

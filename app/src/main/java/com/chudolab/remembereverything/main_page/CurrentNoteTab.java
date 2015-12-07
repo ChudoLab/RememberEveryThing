@@ -20,7 +20,11 @@ import java.util.ArrayList;
 
 
 public class CurrentNoteTab extends Fragment {
-    EditText currentNoteText;
+    private ArrayList listOfDoing;
+    public ArrayList getListOfDoing() {
+        return listOfDoing;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

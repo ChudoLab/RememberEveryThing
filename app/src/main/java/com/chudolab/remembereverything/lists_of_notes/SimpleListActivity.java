@@ -42,7 +42,7 @@ public class SimpleListActivity extends DrawerAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("simples ", " " +  Singleton.getInstance().getSimpleNotes().size());
+        Log.e("simples ", " " + Singleton.getInstance().getSimpleNotes().size());
         rvSimpls = (RecyclerView) findViewById(R.id.lvSimple);
         GridLayoutManager linearLayoutManager = new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false);
         rvSimpls.setLayoutManager(linearLayoutManager);
