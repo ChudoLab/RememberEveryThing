@@ -1,128 +1,82 @@
 package com.chudolab.remembereverything.main_page;
 
-import android.content.Intent;
-import android.content.res.Configuration;
+import android.app.FragmentManager;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
-import com.chudolab.remembereverything.ListOfSubjectActivity;
+import com.chudolab.remembereverything.DrawerAppCompatActivity;
 import com.chudolab.remembereverything.R;
-import com.chudolab.remembereverything.lists_of_notes.TasksListActivity;
-import com.chudolab.remembereverything.lists_of_notes.ToDoListActivity;
+import com.parse.ParseObject;
 
 import view.SlidingTabLayout;
 
-public class MainPageActivity extends AppCompatActivity {
-    private ViewPager pager;
-    private ViewPagerAdapter adapter;
-    private SlidingTabLayout tabs;
+public class MainPageActivity extends DrawerAppCompatActivity {
     private CharSequence Titles[] = {"Note", "Options"};
     private int Numboftabs = 2;
-    private ActionBarDrawerToggle toggle;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_page);
 
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), Titles, Numboftabs);
-        pager = (ViewPager) findViewById(R.id.pager);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), Titles, Numboftabs);
+        ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
 
-        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         tabs.setViewPager(pager);
-
-        //Toolbar
-        Toolbar myToolBar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolBar);
-
-        //DRAWER
-        //Toggle Drawer
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        toggle = new ActionBarDrawerToggle(
-                this,
-                drawerLayout,
-                myToolBar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        toggle.setDrawerIndicatorEnabled(true);
-        drawerLayout.setDrawerListener(toggle);
-
-        //Drawer job with keyboard
-
-        drawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                //how to hide a keyboard
-                InputMethodManager inputMethodManager = (InputMethodManager)
-                        getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            public int getIndicatorColor(int position) {
+                return Color.rgb(146, 170, 201); //#6997D3
+            }
+
+            @Override
+            public int getDividerColor(int position) {
+                return 0;
             }
         });
     }
 
-    //drawer menu click
-    public void onDrawerMenuClick(MenuItem menuItem) {
-        Intent intent;
-        if (menuItem.getItemId() == R.id.buttonSimpleNotes) {
-            intent = new Intent(getApplicationContext(), ListOfSubjectActivity.class);
-        } else if (menuItem.getItemId() == R.id.buttonTodos) {
-            intent = new Intent(getApplicationContext(), ToDoListActivity.class);
-        } else if (menuItem.getItemId() == R.id.buttonTasks) {
-            intent = new Intent(getApplicationContext(), TasksListActivity.class);
-        } else {
-            Toast.makeText(MainPageActivity.this, "settings", Toast.LENGTH_SHORT).show();
-            intent = new Intent();
-        }
+    //TODO Do i need it?
+    @Override
+    protected void onStop() {
+        super.onStop();
 
-        startActivity(intent);
+        DrawerLayout dr = (DrawerLayout) findViewById(R.id.drawerLayout);
+        dr.closeDrawers();
+
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        return true;
+    public Toolbar getToolbar() {
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        return myToolbar;
     }
 
-    // this is for all menu items
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (toggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-//          else if (item.getItemId() == R.id.currentOptions) {
-//            Intent intent = new Intent(getApplicationContext(), Options.class);
-//            startActivityForResult(intent, 1);
-//        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    // this 2 methods are for Drawer toggle
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        toggle.syncState();
+    public int getToolbarMenu() {
+        return R.menu.toolbar_menu;
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        toggle.onConfigurationChanged(newConfig);
+    public View getContentView() {
+        View contentView = getLayoutInflater().inflate(R.layout.activity_main_page, null);
+        return contentView;
     }
+
 
     public void setNotification(int[] times, String currentNoteText, String currentNoteId) {
 //
@@ -172,6 +126,113 @@ public class MainPageActivity extends AppCompatActivity {
 //    }
 
 
+    }
+
+    public void onSaveButtonClick(View v) {
+        EditText currentNoteText = (EditText) findViewById(R.id.currentNoteText);
+        Switch ifTodo = (Switch) findViewById(R.id.wantTodo);
+        Switch ifReminder = (Switch) findViewById(R.id.wantReminder);
+        Switch ifCalendar = (Switch) findViewById(R.id.wantCalendar);
+        Switch ifRemind = (Switch) findViewById(R.id.ifRemind);
+        Switch wantName = (Switch)findViewById(R.id.wantName);
+        Switch wantTopic = (Switch)findViewById(R.id.wantTopic);
+        EditText gotTopic = (EditText)findViewById(R.id.addTopic);
+        EditText gotName = (EditText)findViewById(R.id.addName);
+        ParseObject po;
+
+//        //THIS IS SIMPLE NOTE
+//        if (!ifTodo.isChecked() && !ifRemind.isChecked()) {
+//
+//            String resCurrentNote = currentNoteText.getText().toString();
+//            if (!resCurrentNote.isEmpty()) { //if note text is not empty
+//                po = new ParseObject("SimpleNotes");
+//                if(wantName.isChecked() && !gotName.getText().toString().isEmpty()) { //name checked and exist
+//                    po.put("name", gotName.getText().toString());
+//                }
+//                if(wantTopic.isChecked() && !gotTopic.getText().toString().isEmpty()) { //topic checked and exist
+//                    po.put("subject", gotTopic.getText().toString());
+//                }
+//                po.put("text", resCurrentNote);
+//                po.saveInBackground();
+//            }else Toast.makeText(MainPageActivity.this, "Note is empty!", Toast.LENGTH_SHORT).show();
+//
+//            //THIS IS TO DO
+//        } else if (ifTodo.isChecked()) {
+//
+//
+//            //THIS IS TASK
+//        } else if (ifRemind.isChecked()) {
+//
+//
+//        }
+//
+//
+//                if (noteType == RESULT_SIMPLE_NOTE) {
+//
+//                    if (!gotOptions.get(0).isEmpty()) {
+//                        po.put("name", gotOptions.get(0));
+//                    }
+//                    if (!gotOptions.get(1).isEmpty()) {
+//                        po.put("subject", gotOptions.get(1));
+//                    }
+//
+//                } else if (noteType == RESULT_SIMPLE_TODO) {
+//
+//                }
+
+//        if (v.getId() == R.id.buttonSaveClose) {
+//
+//
+//
+//
+//
+//                if (noteType == RESULT_TAB_TASK) {
+//                    if (times != null) {
+//
+////                        po.put("text", resCurrentNote);
+////
+////                        po.saveInBackground(new SaveCallback() {
+////                            @Override
+////                            public void done(ParseException e) {
+////                                if (e == null) {
+////                                    Toast.makeText(getApplicationContext(), "Saved ", Toast.LENGTH_SHORT).show();
+////                                    currentNoteId = po.getObjectId();
+////                                    Log.e("current Id", currentNoteId);
+////
+////                                } else {
+////                                    Toast.makeText(getApplicationContext(), "Error ", Toast.LENGTH_SHORT).show();
+////                                }
+////                            }
+////                        });
+//                        setNotification(times, currentNoteText.getText().toString(), currentNoteId);
+//                        finish();
+//                    }
+//
+//                }
+//                //TODO default name and subject
+//
+//                po.put("text", resCurrentNote);
+//
+//                po.saveInBackground(new SaveCallback() {
+//                    @Override
+//                    public void done(ParseException e) {
+//                        if (e == null) {
+//                            Toast.makeText(getApplicationContext(), "Saved ", Toast.LENGTH_SHORT).show();
+//                            finish();
+//                        } else {
+//                            Toast.makeText(getApplicationContext(), "Error ", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+//            } else {
+//                Toast.makeText(MainActivity.this, "Note is empty!", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        }
+
+
+//        po.saveInBackground();
+        finish();
     }
 }
 

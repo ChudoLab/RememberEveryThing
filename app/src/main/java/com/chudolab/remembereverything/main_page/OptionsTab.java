@@ -8,11 +8,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -36,26 +39,40 @@ public class OptionsTab extends Fragment {
     private Calendar calendar;
     private TextView showTime;
     private TextView showDate;
-    private TextView reminderShow;
-    private TextView calendarShow;
+    private ImageView reminderShow;
+    private ImageView calendarShow;
+    private Switch wantTodo;
+    private Switch wantName;
+    private Switch wantTopic;
+    private Switch ifRemind;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.options_tab, container, false);
+        final View v = inflater.inflate(R.layout.options_tab, container, false);
+
+        wantTodo = (Switch) v.findViewById(R.id.wantTodo);
+        reminderShow = (ImageView) getActivity().findViewById(R.id.reminderShow);
+        calendarShow = (ImageView) getActivity().findViewById(R.id.calendarShow);
+        Switch enableReminder = (Switch) v.findViewById(R.id.wantReminder);
+        final Switch enableCalendar = (Switch) v.findViewById(R.id.wantCalendar);
+        final Switch isTodayReminder = (Switch) v.findViewById(R.id.ifTodayReminder);
+        wantName = (Switch) v.findViewById(R.id.wantName);
+        existingTopics = Singleton.getInstance().getSubjects();
+        wantTopic = (Switch) v.findViewById(R.id.wantTopic);
+        ifRemind = (Switch) v.findViewById(R.id.ifRemind);
 
         //ENABLE TODOLIST
 
-        Switch wantTodo = (Switch)v.findViewById(R.id.wantTodo);
+
         wantTodo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                EditText currentNoteText = (EditText)getActivity().findViewById(R.id.currentNoteText);
-                ListView currentTodoNoteText = (ListView)getActivity().findViewById((R.id.currentTodoNoteText));
-                if(isChecked){
+                EditText currentNoteText = (EditText) getActivity().findViewById(R.id.currentNoteText);
+                ListView currentTodoNoteText = (ListView) getActivity().findViewById((R.id.currentTodoNoteText));
+                if (isChecked) {
                     currentNoteText.setVisibility(View.GONE);
                     currentTodoNoteText.setVisibility(View.VISIBLE);
-                }
-                else{
+                } else {
                     currentNoteText.setVisibility(View.VISIBLE);
                     currentTodoNoteText.setVisibility(View.GONE);
 
@@ -64,14 +81,13 @@ public class OptionsTab extends Fragment {
         });
         //ENABLE NAME
 
-        Switch wantName = (Switch)v.findViewById(R.id.wantName);
+
         wantName.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     getActivity().findViewById(R.id.addName).setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     getActivity().findViewById(R.id.addName).setVisibility(View.GONE);
                 }
             }
@@ -79,9 +95,9 @@ public class OptionsTab extends Fragment {
 
         //TOPICS
 
-        existingTopics = Singleton.getInstance().getSubjects();
 
-        ArrayAdapter<String> topicAdapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, existingTopics);
+        ArrayAdapter<String> topicAdapter = new ArrayAdapter<String>(getContext(),
+                R.layout.support_simple_spinner_dropdown_item, existingTopics);
         topicAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         Spinner spinner = (Spinner) getActivity().findViewById(R.id.existingTopics);
@@ -99,7 +115,7 @@ public class OptionsTab extends Fragment {
             }
 
         });
-        Switch wantTopic = (Switch) v.findViewById(R.id.wantTopic);
+
         wantTopic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -112,42 +128,90 @@ public class OptionsTab extends Fragment {
                 }
             }
         });
-        //DATE AND TIME PICKERS
-        reminderShow = (TextView) getActivity().findViewById(R.id.reminderShow);
-        calendarShow = (TextView) getActivity().findViewById(R.id.calendarShow);
-        Switch enableReminder = (Switch) v.findViewById(R.id.wantReminder);
-        Switch enableCalendar = (Switch) v.findViewById(R.id.wantCalendar);
+//       REMINDER
 
-        enableReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ifRemind.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    showTimePicker();
+                    v.findViewById(R.id.reminderLayout).setVisibility(View.VISIBLE);
+                    isTodayReminder.setChecked(true);
+                    ifRemind.setChecked(true);
+                    enableCalendar.setChecked(false);
+
+
                 } else {
-                    showTime = (TextView) getActivity().findViewById(R.id.timeShow);
-                    showTime.setVisibility(View.GONE);
-                    showTime.setText("");
-                    reminderShow.setVisibility(View.GONE);
-                    gotTime = null;
+                    v.findViewById(R.id.reminderLayout).setVisibility(View.GONE);
+
                 }
+
+
             }
         });
-        enableCalendar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        //DATE AND TIME PICKERS
+
+        isTodayReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
+                showDate = (TextView) getActivity().findViewById(R.id.dateShow);
+                Button setDate = (Button) v.findViewById(R.id.setDate);
+                if (!isChecked) {
                     showDatePicker();
+                    showDate.setVisibility(View.VISIBLE);
+                    setDate.setVisibility(View.VISIBLE);
                 } else {
-                    showDate = (TextView) getActivity().findViewById(R.id.dateShow);
+                    setDate.setVisibility(View.GONE);
                     showDate.setVisibility(View.GONE);
                     showDate.setText("");
                     calendarShow.setVisibility(View.GONE);
                     gotDate = null;
-
                 }
             }
         });
 
+        enableReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ImageView imageRemider = (ImageView) v.findViewById(R.id.imageReminder);
+                if (isChecked) {
+                    imageRemider.setVisibility(View.VISIBLE);
+                    reminderShow.setVisibility(View.VISIBLE);
+                } else {
+                    imageRemider.setVisibility(View.GONE);
+                    reminderShow.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        enableCalendar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ImageView imageCalendar = (ImageView) v.findViewById(R.id.imageCalendar);
+
+                if (isChecked) {
+                    imageCalendar.setVisibility(View.VISIBLE);
+                    calendarShow.setVisibility(View.VISIBLE);
+                } else {
+
+                    imageCalendar.setVisibility(View.GONE);
+                    calendarShow.setVisibility(View.GONE);
+                }
+            }
+        });
+        Button setTime = (Button) v.findViewById(R.id.setTime);
+        setTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePicker();
+            }
+        });
+        Button setDate = (Button) v.findViewById(R.id.setDate);
+        setDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker();
+            }
+        });
 
         return v;
     }
@@ -169,14 +233,9 @@ public class OptionsTab extends Fragment {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             showTime = (TextView) getActivity().findViewById(R.id.timeShow);
-            showTime.setText("You've set reminder on " + hourOfDay +
-                    " hour " + " and " + minute + "minutes");
+            showTime.setText("Time: " + hourOfDay + ":" + minute);
             showTime.setVisibility(View.VISIBLE);
 
-
-            reminderShow.setVisibility(View.VISIBLE);
-            reminderShow.setText("You've set reminder on " + hourOfDay +
-                    " hour " + " and " + minute + "minutes");
 
             gotTime = new int[]{hourOfDay, minute};
 
@@ -202,15 +261,11 @@ public class OptionsTab extends Fragment {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             showDate = (TextView) getActivity().findViewById(R.id.dateShow);
-            showDate.setText("You've set calendar on " + "year " + year +
-                    " year " + monthOfYear + "month " + " and " + dayOfMonth + " day");
+            showDate.setText("Date: " + dayOfMonth + "/" + monthOfYear + "/" + year);
             showDate.setVisibility(View.VISIBLE);
             gotDate = new int[]{dayOfMonth, monthOfYear, year};
 
 
-            calendarShow.setVisibility(View.VISIBLE);
-            calendarShow.setText("You've set calendar on " + "year " + year +
-                    " year " + monthOfYear + "month " + " and " + dayOfMonth + " day");
         }
     };
 }

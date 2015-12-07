@@ -82,6 +82,7 @@ public class CurrentTodoAdapter extends BaseAdapter {
             todoText.setText(listOfTodo.get(position).getText());
             todoCheckbox.setChecked(listOfTodo.get(position).isChecked());
 
+
             if (listOfTodo.get(position).getText() != null) {
                 todoCheckbox.setVisibility(View.GONE);
             }
