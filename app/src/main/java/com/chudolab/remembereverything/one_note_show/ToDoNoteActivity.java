@@ -36,21 +36,21 @@ public class ToDoNoteActivity extends AppCompatActivity {
         text.setTextColor(Color.BLACK);
         period.setTextColor(Color.BLACK);
 
-        Button btnSave = (Button) findViewById(R.id.btnSaveSimpleNote);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Note note = Singleton.getInstance().getToDoNotes().get(position);
-                ParseObject object = ParseObject.createWithoutData("ToDoNotes", note.getObjectId());
-                object.put("name", name.getText().toString());
-                //object.put("subject", subject.getText().toString());
-                //object.put("text", text.getText().toString());
-                object.saveInBackground();
-                note.setName(name.getText().toString());
-                note.setText(text.getText().toString());
-                // ((TaskNote) note).setSubject(subject.getText().toString());
-                finish();
-            }
-        });
+//        Button btnSave = (Button) findViewById(R.id.btnSaveSimpleNote);
+//        btnSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Note note = Singleton.getInstance().getToDoNotes().get(position);
+//                ParseObject object = ParseObject.createWithoutData("ToDoNotes", note.getObjectId());
+//                object.put("name", name.getText().toString());
+//                //object.put("subject", subject.getText().toString());
+//                //object.put("text", text.getText().toString());
+//                object.saveInBackground();
+//                note.setName(name.getText().toString());
+//                note.setText(text.getText().toString());
+//                // ((TaskNote) note).setSubject(subject.getText().toString());
+//                finish();
+//            }
+//        });
     }
 }

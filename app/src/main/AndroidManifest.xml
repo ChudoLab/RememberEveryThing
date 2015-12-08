@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.chudolab.remembereverything" >
+    package="com.chudolab.remembereverything">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -13,18 +13,37 @@
         android:icon="@drawable/diamond11111"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppBaseTheme" >
+        android:theme="@style/AppBaseTheme">
+        <activity
+            android:name=".main_page.MainPageActivity"
+            android:launchMode="singleInstance"
+            android:windowSoftInputMode="adjustResize">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".LoginSingupActivity">
+
+        </activity>
         <activity
             android:name=".Main2Activity"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+
         <activity
             android:name=".old_main.MainActivity"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize"/>
 
         </activity>
         <activity android:name=".lists_of_notes.SimpleListActivity" />
@@ -37,22 +56,12 @@
         <receiver android:name=".options.AlarmReceiver" />
 
         <activity android:name=".ListOfSubjectActivity" />
-        <activity android:name=".main_page.MainPageActivity"
-            android:launchMode="singleInstance"
-            android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".LoginSingupActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
+
+
+
+
+

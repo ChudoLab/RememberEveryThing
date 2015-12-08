@@ -10,8 +10,9 @@ import com.parse.ParseUser;
  * Created by Chudo on 15.11.2015.
  */
 public class MyApp extends Application {
-    private static final String APPLICATION_ID = "add your parse";
-    private static final String CLIENT_KEY = "add your parse";
+    private static final String APPLICATION_ID = "wRLGO7Ec8KuPm0bhO5KBG6AfSNUQdsjTD8BRkQKi" ;
+
+    private static final String CLIENT_KEY = "TgE4qr2s0fzNrFdWK1mfW4jQpeip4xoB3gbfdsV4";
     @Override
     public void onCreate() {
         super.onCreate();

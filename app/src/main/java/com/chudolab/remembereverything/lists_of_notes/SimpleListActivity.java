@@ -45,12 +45,12 @@ public class SimpleListActivity extends DrawerAppCompatActivity {
         super.onCreate(savedInstanceState);
 
         rvSimpls = (RecyclerView) findViewById(R.id.lvSimple);
-        GridLayoutManager linearLayoutManager = new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false);
+        GridLayoutManager linearLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         rvSimpls.setLayoutManager(linearLayoutManager);
 
         simplesList = Singleton.getInstance().getSimpleNotes();
 
-         adapter = new NoteMovieAdapter(this,"Simple",simplesList,R.layout.simple_note_for_list,R.id.tvSimpleName,R.id.tvSimpleDesc,R.id.tvSimpleText);
+        adapter = new NoteMovieAdapter(this, "Simple", simplesList, R.layout.simple_note_for_list, R.id.tvSimpleName, R.id.tvSimpleDesc, R.id.tvSimpleText);
         rvSimpls.setAdapter(adapter);
         ItemTouchHelper.Callback callback = new NoteTouchHelper(adapter);
 
@@ -79,7 +79,7 @@ public class SimpleListActivity extends DrawerAppCompatActivity {
                                 list.get(i).getString("name"),
                                 list.get(i).getString("text"),
                                 list.get(i).getString("subject")
-                        ) ;
+                        );
                         simplesList.add(simpleNote);
 
                     }
@@ -93,7 +93,8 @@ public class SimpleListActivity extends DrawerAppCompatActivity {
         });
 
     }
-    public static void remove(int i){
+
+    public static void remove(int i) {
         Singleton.getInstance().getSimpleNotes().remove(i);
     }
 
@@ -104,6 +105,7 @@ public class SimpleListActivity extends DrawerAppCompatActivity {
         dr.closeDrawers();
 
     }
+
     @Override
     public Toolbar getToolbar() {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar_lists);
@@ -113,13 +115,14 @@ public class SimpleListActivity extends DrawerAppCompatActivity {
 
         return myToolbar;
     }
-    public int getToolbarMenu(){
+
+    public int getToolbarMenu() {
         return R.menu.toolbar_menu_list;
     }
 
     @Override
     public View getContentView() {
-        View contentView = getLayoutInflater().inflate(R.layout.activity_simple_list,null);
+        View contentView = getLayoutInflater().inflate(R.layout.activity_simple_list, null);
         return contentView;
     }
 

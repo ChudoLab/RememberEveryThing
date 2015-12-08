@@ -3,6 +3,8 @@ package com.chudolab.remembereverything.one_note_show;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -51,22 +53,22 @@ public class SimpleNoteActivity extends AppCompatActivity {
         text.setTextColor(Color.BLACK);
         subject.setTextColor(Color.BLACK);
 
-        Button btnSave = (Button) findViewById(R.id.btnSaveSimpleNote);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ParseObject object = ParseObject.createWithoutData("SimpleNotes", note.getObjectId());
-                object.put("name", name.getText().toString());
-                object.put("subject", subject.getText().toString());
-                object.put("text", text.getText().toString());
-                object.saveInBackground();
-                note.setName(name.getText().toString());
-                note.setText(text.getText().toString());
-                ((SimpleNote) note).setSubject(subject.getText().toString());
-               // notifyAll();
-                finish();
-            }
-        });
+//        Button btnSave = (Button) findViewById(R.id.btnSaveSimpleNote);
+//        btnSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ParseObject object = ParseObject.createWithoutData("SimpleNotes", note.getObjectId());
+//                object.put("name", name.getText().toString());
+//                object.put("subject", subject.getText().toString());
+//                object.put("text", text.getText().toString());
+//                object.saveInBackground();
+//                note.setName(name.getText().toString());
+//                note.setText(text.getText().toString());
+//                ((SimpleNote) note).setSubject(subject.getText().toString());
+//               // notifyAll();
+//                finish();
+//            }
+//        });
 
     }
     //toolbar menu
@@ -80,6 +82,14 @@ public class SimpleNoteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if(item.getItemId() == R.id.okButton){
+            ParseObject object = ParseObject.createWithoutData("SimpleNotes", note.getObjectId());
+                object.put("name", name.getText().toString());
+                object.put("subject", subject.getText().toString());
+                object.put("text", text.getText().toString());
+                object.saveInBackground();
+                note.setName(name.getText().toString());
+                note.setText(text.getText().toString());
+                ((SimpleNote) note).setSubject(subject.getText().toString());
            finish();
         }
         else  {

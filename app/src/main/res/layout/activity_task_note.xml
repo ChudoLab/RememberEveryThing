@@ -9,6 +9,7 @@
     <include layout="@layout/my_tool_bar_one_show"></include>
 
     <LinearLayout
+        style="@style/cardHolderLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -19,11 +20,38 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ListView
-                style="@style/cardHolderLayout"
-                android:id="@+id/lvToDo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></ListView>
+            <EditText
+                android:id="@+id/etNameTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="name: " />
+
+            <EditText
+                android:id="@+id/etDateTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etNameTask"
+                android:text="date: " />
+
+            <EditText
+                android:id="@+id/etTimeTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etDateTask"
+                android:text="time: " />
+
+            <EditText
+                android:id="@+id/etTextTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etTimeTask"
+                android:text="text: " />
+            <!--<ListView-->
+                <!--style="@style/cardHolderLayout"-->
+                <!--android:id="@+id/lvToDo"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"></ListView>-->
+
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

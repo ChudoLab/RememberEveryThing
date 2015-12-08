@@ -138,11 +138,13 @@ public class OptionsTab extends Fragment {
                     isTodayReminder.setChecked(true);
                     ifRemind.setChecked(true);
                     enableCalendar.setChecked(false);
+                    reminderShow.setVisibility(View.VISIBLE);
 
 
                 } else {
                     v.findViewById(R.id.reminderLayout).setVisibility(View.GONE);
-
+                    reminderShow.setVisibility(View.INVISIBLE);
+                    calendarShow.setVisibility(View.INVISIBLE);
                 }
 
 

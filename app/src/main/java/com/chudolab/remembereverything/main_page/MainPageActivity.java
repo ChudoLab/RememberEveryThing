@@ -14,19 +14,37 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.chudolab.remembereverything.DrawerAppCompatActivity;
 import com.chudolab.remembereverything.R;
+import com.chudolab.remembereverything.Singleton;
+import com.chudolab.remembereverything.type_of_notes.Note;
+import com.chudolab.remembereverything.type_of_notes.SimpleNote;
+import com.chudolab.remembereverything.type_of_notes.TaskNote;
+import com.chudolab.remembereverything.type_of_notes.ToDoNote;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import view.SlidingTabLayout;
 
-public class MainPageActivity extends DrawerAppCompatActivity {
+public class MainPageActivity extends DrawerAppCompatActivity implements CurrentNoteTab.OnGetListOfTodo{
     private CharSequence Titles[] = {"Note", "Options"};
     private int Numboftabs = 2;
+    //Dowloaded from parse
+    ArrayList<Note> simplesList;
+    ArrayList<Note> toDoList;
+    ArrayList<Note> taskList;
+    ArrayList<CheckBox> todoCheckbox;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +67,7 @@ public class MainPageActivity extends DrawerAppCompatActivity {
                 return 0;
             }
         });
+        downloadNotes();
     }
 
     //TODO Do i need it?
@@ -140,32 +159,41 @@ public class MainPageActivity extends DrawerAppCompatActivity {
         EditText gotName = (EditText)findViewById(R.id.addName);
         ParseObject po;
 
-//        //THIS IS SIMPLE NOTE
-//        if (!ifTodo.isChecked() && !ifRemind.isChecked()) {
-//
-//            String resCurrentNote = currentNoteText.getText().toString();
-//            if (!resCurrentNote.isEmpty()) { //if note text is not empty
-//                po = new ParseObject("SimpleNotes");
-//                if(wantName.isChecked() && !gotName.getText().toString().isEmpty()) { //name checked and exist
-//                    po.put("name", gotName.getText().toString());
-//                }
-//                if(wantTopic.isChecked() && !gotTopic.getText().toString().isEmpty()) { //topic checked and exist
-//                    po.put("subject", gotTopic.getText().toString());
-//                }
-//                po.put("text", resCurrentNote);
-//                po.saveInBackground();
-//            }else Toast.makeText(MainPageActivity.this, "Note is empty!", Toast.LENGTH_SHORT).show();
-//
-//            //THIS IS TO DO
-//        } else if (ifTodo.isChecked()) {
-//
-//
-//            //THIS IS TASK
-//        } else if (ifRemind.isChecked()) {
-//
-//
-//        }
-//
+        Log.e("button","clicked");
+
+        //THIS IS SIMPLE NOTE
+        if (!ifTodo.isChecked() && !ifRemind.isChecked()) {
+
+            String resCurrentNote = currentNoteText.getText().toString();
+            if (!resCurrentNote.isEmpty()) { //if note text is not empty
+                po = new ParseObject("SimpleNotes");
+                if(wantName.isChecked() && !gotName.getText().toString().isEmpty()) { //name checked and exist
+                    po.put("name", gotName.getText().toString());
+                }
+                if(wantTopic.isChecked() && !gotTopic.getText().toString().isEmpty()) { //topic checked and exist
+                    po.put("subject", gotTopic.getText().toString());
+                }
+                po.put("text", resCurrentNote);
+                Log.e("simple", "" + resCurrentNote);
+                po.saveInBackground();
+
+            }else Toast.makeText(MainPageActivity.this, "Note is empty!", Toast.LENGTH_SHORT).show();
+
+            //THIS IS TO DO
+        } else if (ifTodo.isChecked()) {
+            //get arraylist fragment activ
+
+            Log.e("size", "" + todoCheckbox.size());
+            for (int i = 0; i <todoCheckbox.size() ; i++) {
+                System.out.println(todoCheckbox.get(i).getText().toString());
+            }
+
+            //THIS IS TASK
+        } else if (ifRemind.isChecked()) {
+
+
+        }
+
 //
 //                if (noteType == RESULT_SIMPLE_NOTE) {
 //
@@ -234,6 +262,103 @@ public class MainPageActivity extends DrawerAppCompatActivity {
 //        po.saveInBackground();
         finish();
     }
+
+    public void downloadNotes (){
+
+        //simple notes
+        simplesList = Singleton.getInstance().getSimpleNotes();
+        ParseQuery<ParseObject> pq = ParseQuery.getQuery("SimpleNotes");
+        pq.whereEqualTo("user", ParseUser.getCurrentUser());
+        pq.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    Singleton.getInstance().refresh(simplesList);
+                    for (int i = 0; i < list.size(); i++) {
+                        SimpleNote simpleNote = new SimpleNote(
+                                list.get(i).getObjectId(),
+                                list.get(i).getUpdatedAt(),
+                                list.get(i).getCreatedAt(),
+                                list.get(i).getString("name"),
+                                list.get(i).getString("text"),
+                                list.get(i).getString("subject")
+                        ) ;
+                        simplesList.add(simpleNote);
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+        taskList=Singleton.getInstance().getTaskNotes();
+        ParseQuery<ParseObject> pq2 = ParseQuery.getQuery("TaskNotes");
+        pq2.whereEqualTo("user", ParseUser.getCurrentUser());
+        pq2.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    Singleton.getInstance().refresh(taskList);
+                    for (int i = 0; i < list.size(); i++) {
+                        TaskNote taskNote = new TaskNote(
+                                list.get(i).getObjectId(),
+                                list.get(i).getUpdatedAt(),
+                                list.get(i).getCreatedAt(),
+                                list.get(i).getString("name"),
+                                list.get(i).getString("text"),
+                                list.get(i).getList("date"),
+                                list.get(i).getList("time")
+                        );
+                        taskList.add(taskNote);
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+        toDoList=Singleton.getInstance().getToDoNotes();
+        ParseQuery<ParseObject> pq3 = ParseQuery.getQuery("ToDoNotes");
+        pq3.whereEqualTo("user", ParseUser.getCurrentUser());
+        pq3.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    Singleton.getInstance().refresh(toDoList);
+
+                    for (int i = 0; i < list.size(); i++) {
+                        ToDoNote toDoNote = new ToDoNote(
+                                list.get(i).getObjectId(),
+                                list.get(i).getUpdatedAt(),
+                                list.get(i).getCreatedAt(),
+                                list.get(i).getString("name"),
+                                list.get(i).getString("text"),
+                                list.get(i).getInt("period"),
+                                ((ArrayList) list.get(i).getList("doing"))
+                        );
+                        toDoList.add(toDoNote);
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+
+    }
+// have to rewrite it
+    @Override
+    public ArrayList<CheckBox> getListOfDoing(ArrayList listOfTodo) {
+
+        return this.todoCheckbox = listOfTodo;
+    }
 }
+
 
 
