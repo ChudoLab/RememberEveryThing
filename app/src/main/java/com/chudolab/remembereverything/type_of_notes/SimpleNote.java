@@ -6,19 +6,10 @@ import java.util.Date;
  * Created by ASUS on 10.11.2015.
  */
 public class SimpleNote extends Note {
-    private String subject;
 
     public SimpleNote(String id,Date dateOfApdate, Date dateOfcreate,String name, String text,String subject) {
-        super(id,dateOfcreate,dateOfApdate,name, text);
-        this.subject=subject;
-    }
+        super(id,dateOfcreate,dateOfApdate,name, subject,text);
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
     }
 
     @Override

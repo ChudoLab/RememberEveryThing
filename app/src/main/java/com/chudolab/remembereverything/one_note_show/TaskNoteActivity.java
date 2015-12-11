@@ -50,7 +50,7 @@ public class TaskNoteActivity extends AppCompatActivity {
 
 
         name.setText(note.getName());
-        date.setText("date: " + note.getDate().get(0) + "." + note.getDate().get(1) + "." + note.getDate().get(2));
+       date.setText("date: " + note.getDate().get(0) + "." + note.getDate().get(1) + "." + note.getDate().get(2));
         time.setText("time: " + note.getTime().get(0) + ":" + note.getTime().get(1));
         text.setText(Singleton.getInstance().getTaskNotes().get(position).getText());
         name.setTextColor(Color.BLACK);

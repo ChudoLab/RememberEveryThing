@@ -43,6 +43,7 @@ public class NoteMovieAdapter extends RecyclerView.Adapter<NoteMovieAdapter.View
     private int idOfDoingList;
     private String name;
     Class noteActivity;
+    String subject;
 
 
     public Context getContext() {
@@ -203,7 +204,7 @@ public class NoteMovieAdapter extends RecyclerView.Adapter<NoteMovieAdapter.View
             if (idOfDoingList == 0) {
                 tvNoteName.setText("Name: "+note.getName());
                 tvText.setText("Topic: "+note.getText());
-                tvNoteDescription.setText("poka tak");
+                tvNoteDescription.setText(note.getDescription());
             }else{
                 tvNoteName.setText(note.getName());
                 lvDoing.setAdapter(new ToDoAdapter(context, R.layout.doing_for_list,  ((ToDoNote)note).getDoing()));
