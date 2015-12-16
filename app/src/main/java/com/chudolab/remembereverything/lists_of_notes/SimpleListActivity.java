@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -32,8 +33,9 @@ public class SimpleListActivity extends DrawerAppCompatActivity {
     ArrayList<Note> simplesList;
     RecyclerView rvSimpls;
     ProgressDialog dialog;
+    NoteMovieAdapter adapterAll;
     NoteMovieAdapter adapter;
-
+String subject;
     @Override
     protected void onStart() {
         super.onStart();
@@ -57,40 +59,52 @@ public class SimpleListActivity extends DrawerAppCompatActivity {
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(rvSimpls);
 
-        String subject = getIntent().getStringExtra("subject");
-        ParseUser.getCurrentUser();
-        ParseQuery<ParseObject> pq = ParseQuery.getQuery("SimpleNotes");
+        //String subject = getIntent().getStringExtra("subject");
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(getToolbarMenu(), menu);
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menu.add("All");
+        for(String subject: Singleton.getInstance().getSubjects()){
+            menu.add(subject);
+        }
 
-        dialog = new ProgressDialog(this);
-        dialog.setTitle("Downloading notes");
-        dialog.show();
-        pq.whereEqualTo("subject", subject);
 
-        pq.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
-                if (e == null) {
-                    Singleton.getInstance().refresh(simplesList);
-                    for (int i = 0; i < list.size(); i++) {
-                        SimpleNote simpleNote = new SimpleNote(
-                                list.get(i).getObjectId(),
-                                list.get(i).getUpdatedAt(),
-                                list.get(i).getCreatedAt(),
-                                list.get(i).getString("name"),
-                                list.get(i).getString("text"),
-                                list.get(i).getString("subject")
-                        );
-                        simplesList.add(simpleNote);
+        return true;
+    }
 
-                    }
-                    adapter.notifyDataSetChanged();
-                    dialog.cancel();
-                } else {
-                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                }
+    // this is for all menu items
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getTitle().equals("All")){
+            adapter = new NoteMovieAdapter(this, "Simple", simplesList, R.layout.simple_note_for_list, R.id.tvSimpleName, R.id.tvSimpleDesc, R.id.tvSimpleText);
+            rvSimpls.setAdapter(adapter);
+            ItemTouchHelper.Callback callback = new NoteTouchHelper(adapter);
 
+            ItemTouchHelper helper = new ItemTouchHelper(callback);
+            helper.attachToRecyclerView(rvSimpls);
+            adapter.notifyDataSetChanged();
+        }else{
+            getNotesWhithSubject(item.getItemId());}
+        return super.onOptionsItemSelected(item);
+
+    }
+    public void getNotesWhithSubject(int position){
+        ArrayList<Note> notes = new ArrayList<>();
+        subject=Singleton.getInstance().getSubjects().get(position);
+
+        for(Note note: Singleton.getInstance().getSimpleNotes()){
+            if(((SimpleNote)note).getSubject().equalsIgnoreCase(subject)){
+                notes.add(note);
             }
-        });
+        }
+        adapter = new NoteMovieAdapter(this, "Simple", notes, R.layout.simple_note_for_list, R.id.tvSimpleName, R.id.tvSimpleDesc, R.id.tvSimpleText);
+        rvSimpls.setAdapter(adapter);
+        ItemTouchHelper.Callback callback = new NoteTouchHelper(adapter);
+
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(rvSimpls);
+        adapter.notifyDataSetChanged();
 
     }
 

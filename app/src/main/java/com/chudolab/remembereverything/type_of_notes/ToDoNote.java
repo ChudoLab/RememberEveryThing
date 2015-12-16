@@ -9,10 +9,12 @@ import java.util.Date;
  */
 public class ToDoNote extends Note {
     private int period;
+    //private ArrayList<String> doing;
     private ArrayList<String> doing;
+    private ArrayList<Boolean> doingBoolean;
 
-    public ToDoNote(String id, Date dateOfApdate, Date dateOfcreate, String name, String text, int period, ArrayList doing) {
-        super(id, dateOfApdate, dateOfcreate, name, text);
+    public ToDoNote(String id, Date dateOfApdate, Date dateOfcreate, String name,String subject, String text, int period, ArrayList doing) {
+        super(id, dateOfApdate, dateOfcreate, name, subject,text);
         this.period = period;
         this.doing = doing;
     }

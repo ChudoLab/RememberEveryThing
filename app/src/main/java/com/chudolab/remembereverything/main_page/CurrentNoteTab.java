@@ -67,7 +67,6 @@ public class CurrentNoteTab extends Fragment {
 
         Spinner spinnerTopics = (Spinner) v.findViewById(R.id.existingTopics);
         spinnerTopics.setAdapter(topicAdapter);
-
         Button buttonSave = (Button)v.findViewById(R.id.buttonSaveClose);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,13 +86,13 @@ public class CurrentNoteTab extends Fragment {
 //
 //            }
         //TODO CLEAR it
-        existingTopics.add("Thoughts");
-        existingTopics.add("Recipe");
-        spinnerTopics.setSelection(1);
-        Singleton.getInstance().setSubjects(existingTopics);
-        for (int i = 0; i <existingTopics.size() ; i++) {
-            System.out.println(existingTopics.get(i));
-        }
+        existingTopics.add("");
+       // existingTopics.add("Recipe");
+  //      spinnerTopics.setSelection(1);
+        //Singleton.getInstance().setSubjects(existingTopics);
+        //for (int i = 0; i <existingTopics.size() ; i++) {
+          //  System.out.println(existingTopics.get(i));
+//        }
 
         return v;
     }
