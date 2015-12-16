@@ -11,15 +11,18 @@ abstract public class Note {
     private String text;
     private Date dateOfApdate;
     private Date dateOfCreate;
-   // private String Ob
+    private String subject;
 
 
-    public Note(String id, Date dateOfApdate, Date dateOfCreate, String name, String text) {
+
+
+    public Note(String id, Date dateOfApdate, Date dateOfCreate, String name,String subject, String text) {
         this.objectId = id;
         this.dateOfApdate = dateOfApdate;
         this.dateOfCreate = dateOfCreate;
         this.name = name;
         this.text = text;
+        this.subject=subject;
     }
 
     public Note(String name, String text) {
@@ -35,7 +38,13 @@ abstract public class Note {
         this.text = text;
     }
 
+    public String getSubject() {
+        return subject;
+    }
 
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
     public String getName() {
         return name;

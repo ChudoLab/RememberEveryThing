@@ -20,8 +20,8 @@ public class TaskNote extends Note {
         this.time = time;
     }
 
-    public TaskNote(String id, Date dateOfApdate, Date dateOfcreate, String name, String text, List date,List time) {
-        super(id, dateOfcreate, dateOfApdate, name, text);
+    public TaskNote(String id, Date dateOfApdate, Date dateOfcreate, String name,String subject, String text, List date,List time) {
+        super(id, dateOfcreate, dateOfApdate, name,subject, text);
         this.date = date;
         this.time=time;
     }

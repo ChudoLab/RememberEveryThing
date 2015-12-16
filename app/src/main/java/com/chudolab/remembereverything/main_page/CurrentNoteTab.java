@@ -64,6 +64,7 @@ public class CurrentNoteTab extends Fragment {
         currentTodoList.setAdapter(toDoAdapter);
 
         existingTopics = Singleton.getInstance().getSubjects();
+        
         topicAdapter = new ArrayAdapter<String>(getContext(),
                 R.layout.support_simple_spinner_dropdown_item, existingTopics);
         topicAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -78,7 +79,7 @@ public class CurrentNoteTab extends Fragment {
                 onSaveButtonClick();
             }
         });
-
+        existingTopics.add(""); //TODO Check it
         return v;
     }
 

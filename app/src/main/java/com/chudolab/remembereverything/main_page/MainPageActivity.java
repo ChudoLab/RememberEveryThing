@@ -44,7 +44,7 @@ public class MainPageActivity extends DrawerAppCompatActivity {
     ArrayList<Note> simplesList;
     ArrayList<Note> toDoList;
     ArrayList<Note> taskList;
-
+    ArrayList<CheckBox> todoCheckbox;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,7 +114,7 @@ public class MainPageActivity extends DrawerAppCompatActivity {
                                 list.get(i).getString("name"),
                                 list.get(i).getString("text"),
                                 list.get(i).getString("subject")
-                        );
+                        ) ;
                         simplesList.add(simpleNote);
                     }
 
@@ -125,7 +125,7 @@ public class MainPageActivity extends DrawerAppCompatActivity {
             }
         });
 
-        taskList = Singleton.getInstance().getTaskNotes();
+        taskList=Singleton.getInstance().getTaskNotes();
         ParseQuery<ParseObject> pq2 = ParseQuery.getQuery("TaskNotes");
         pq2.whereEqualTo("user", ParseUser.getCurrentUser());
         pq2.findInBackground(new FindCallback<ParseObject>() {
@@ -139,6 +139,7 @@ public class MainPageActivity extends DrawerAppCompatActivity {
                                 list.get(i).getUpdatedAt(),
                                 list.get(i).getCreatedAt(),
                                 list.get(i).getString("name"),
+                                list.get(i).getString("subject"),
                                 list.get(i).getString("text"),
                                 list.get(i).getList("date"),
                                 list.get(i).getList("time")
@@ -153,7 +154,7 @@ public class MainPageActivity extends DrawerAppCompatActivity {
             }
         });
 
-        toDoList = Singleton.getInstance().getToDoNotes();
+        toDoList=Singleton.getInstance().getToDoNotes();
         ParseQuery<ParseObject> pq3 = ParseQuery.getQuery("ToDoNotes");
         pq3.whereEqualTo("user", ParseUser.getCurrentUser());
         pq3.findInBackground(new FindCallback<ParseObject>() {
@@ -168,11 +169,31 @@ public class MainPageActivity extends DrawerAppCompatActivity {
                                 list.get(i).getUpdatedAt(),
                                 list.get(i).getCreatedAt(),
                                 list.get(i).getString("name"),
+                                list.get(i).getString("subject"),
                                 list.get(i).getString("text"),
                                 list.get(i).getInt("period"),
                                 ((ArrayList) list.get(i).getList("doing"))
                         );
                         toDoList.add(toDoNote);
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+        subjectList = Singleton.getInstance().getSubjects();
+        ParseQuery<ParseObject> pq4 = ParseQuery.getQuery("Subjects");
+        pq4.whereEqualTo("user", ParseUser.getCurrentUser());
+        pq4.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                   subjectList.removeAll(subjectList);
+                    for (int i = 0; i < list.size(); i++) {
+                        subjectList.add(list.get(i).getString("subject"));
                     }
 
                 } else {

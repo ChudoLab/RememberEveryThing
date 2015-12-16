@@ -9,6 +9,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -20,6 +22,7 @@ import com.chudolab.remembereverything.R;
 import com.chudolab.remembereverything.Singleton;
 import com.chudolab.remembereverything.one_note_show.TaskNoteActivity;
 import com.chudolab.remembereverything.type_of_notes.Note;
+import com.chudolab.remembereverything.type_of_notes.SimpleNote;
 import com.chudolab.remembereverything.type_of_notes.TaskNote;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -34,8 +37,8 @@ public class TasksListActivity extends DrawerAppCompatActivity {
 
     ArrayList<Note> taskList;
     RecyclerView rvTasks;
-    ProgressDialog dialog;
     NoteMovieAdapter adapter;
+    String subject;
 
     @Override
     protected void onStart() {
@@ -65,6 +68,53 @@ public class TasksListActivity extends DrawerAppCompatActivity {
         dr.closeDrawers();
 
     }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(getToolbarMenu(), menu);
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menu.add("All");
+        for(String subject: Singleton.getInstance().getSubjects()){
+            menu.add(subject);
+        }
+
+
+        return true;
+    }
+
+    // this is for all menu items
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getTitle().equals("All")){
+
+            adapter = new NoteMovieAdapter(this, "Task", taskList, R.layout.task_note_for_list, R.id.tvNameTask, R.id.tvDateTask, R.id.tvTextTask);
+            rvTasks.setAdapter(adapter);
+            ItemTouchHelper.Callback callback = new NoteTouchHelper(adapter);
+            ItemTouchHelper helper = new ItemTouchHelper(callback);
+            helper.attachToRecyclerView(rvTasks);
+            adapter.notifyDataSetChanged();
+        }else{
+            getNotesWhithSubject(item.getItemId());}
+        return super.onOptionsItemSelected(item);
+
+    }
+    public void getNotesWhithSubject(int position){
+        ArrayList<Note> notes = new ArrayList<>();
+        subject=Singleton.getInstance().getSubjects().get(position);
+
+        for(Note note: Singleton.getInstance().getTaskNotes()){
+            if((note).getSubject().equalsIgnoreCase(subject)){
+                notes.add(note);
+            }
+        }
+
+        adapter = new NoteMovieAdapter(this, "Task", notes, R.layout.task_note_for_list, R.id.tvNameTask, R.id.tvDateTask, R.id.tvTextTask);
+        rvTasks.setAdapter(adapter);
+        ItemTouchHelper.Callback callback = new NoteTouchHelper(adapter);
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(rvTasks);
+    }
+
+
+
     @Override
     public Toolbar getToolbar() {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar_lists);
