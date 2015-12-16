@@ -45,6 +45,7 @@ public class MainPageActivity extends DrawerAppCompatActivity {
     ArrayList<Note> toDoList;
     ArrayList<Note> taskList;
     ArrayList<CheckBox> todoCheckbox;
+    ArrayList subjectList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
