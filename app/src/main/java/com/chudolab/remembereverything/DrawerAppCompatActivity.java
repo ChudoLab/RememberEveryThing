@@ -111,6 +111,7 @@ public abstract class DrawerAppCompatActivity extends AppCompatActivity {
         if (toggle.onOptionsItemSelected(item)) {
             return true;
         }
+
 //        if(item.getItemId() == R.id.back){
 //            onBackPressed();
 //        }

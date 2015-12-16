@@ -19,9 +19,8 @@ import com.chudolab.remembereverything.main_page.MainPageActivity;
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        int smalIcon = R.drawable.ic_action_settings;
-        String noteId = intent.getStringExtra("noteId");
-        int notificationId = Integer.parseInt(noteId);
+        int smalIcon = R.drawable.diamond000;
+        int notificationId = intent.getIntExtra("noteId", 0);
         String currentNoteText = intent.getStringExtra("currentNoteText");
 
         Intent intentOpen = new Intent(context, MainPageActivity.class);
@@ -29,13 +28,12 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
                 context)
-                //.setWhen(7000)
                 .setContentText(currentNoteText)
                 .setContentTitle("Your note")
                 .setSmallIcon(smalIcon)
                 .setAutoCancel(true)
                 .setTicker("Another title")
-                        //.setLargeIcon(largeIcon)
+//                .setLargeIcon(largeIcon)
                 .setDefaults(Notification.DEFAULT_LIGHTS |
                         Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
 
@@ -46,7 +44,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
         Log.e("Alarm", "recieved");
-        notificationManager.notify(notificationId, notification);
+        notificationManager.notify(10, notification);
 
     }
 }
