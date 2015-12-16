@@ -63,6 +63,10 @@ public class CurrentTodoAdapter extends BaseAdapter {
         return position;
     }
 
+    public ArrayList<CheckBox> getListOfTodo() {
+        return listOfTodo;
+    }
+
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 

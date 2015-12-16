@@ -1,7 +1,9 @@
 package com.chudolab.remembereverything.main_page;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -61,8 +63,17 @@ public class OptionsTab extends Fragment {
         wantTopic = (Switch) v.findViewById(R.id.wantTopic);
         ifRemind = (Switch) v.findViewById(R.id.ifRemind);
 
-        //ENABLE TODOLIST
+        //default
+        showDate = (TextView) v.findViewById(R.id.dateShow);
+        showTime = (TextView)v.findViewById(R.id.timeShow);
+        calendar = Calendar.getInstance();
+        gotDate = new int[]{calendar.get(Calendar.DAY_OF_MONTH),calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.YEAR)};
+        gotTime = new int[]{calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE)};
+        showTime.setText("Time: " + gotTime[0] + ":" + gotTime[1]);
+        showDate.setText("Date: " + gotDate[0] + "/" + gotDate[1] + "/" + gotDate[2]);
 
+        //ENABLE TODOLIST
 
         wantTodo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -95,7 +106,6 @@ public class OptionsTab extends Fragment {
 
         //TOPICS
 
-
         ArrayAdapter<String> topicAdapter = new ArrayAdapter<String>(getContext(),
                 R.layout.support_simple_spinner_dropdown_item, existingTopics);
         topicAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -103,18 +113,16 @@ public class OptionsTab extends Fragment {
         Spinner spinner = (Spinner) getActivity().findViewById(R.id.existingTopics);
         spinner.setAdapter(topicAdapter);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //TODO put it in current note state
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //TODO make a defoult topic
-            }
-
-        });
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//            }
+//
+//        });
 
         wantTopic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -129,7 +137,6 @@ public class OptionsTab extends Fragment {
             }
         });
 //       REMINDER
-
         ifRemind.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -155,7 +162,6 @@ public class OptionsTab extends Fragment {
         isTodayReminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                showDate = (TextView) getActivity().findViewById(R.id.dateShow);
                 Button setDate = (Button) v.findViewById(R.id.setDate);
                 if (!isChecked) {
                     showDatePicker();
@@ -221,7 +227,6 @@ public class OptionsTab extends Fragment {
     private void showTimePicker() {
         TimePickerFragment time = new TimePickerFragment();
 
-        calendar = Calendar.getInstance();
         Bundle args = new Bundle();
         args.putInt("hours", calendar.get(Calendar.HOUR));
         args.putInt("minutes", calendar.get(Calendar.MINUTE));
@@ -237,10 +242,7 @@ public class OptionsTab extends Fragment {
             showTime = (TextView) getActivity().findViewById(R.id.timeShow);
             showTime.setText("Time: " + hourOfDay + ":" + minute);
             showTime.setVisibility(View.VISIBLE);
-
-
             gotTime = new int[]{hourOfDay, minute};
-
         }
     };
 
@@ -262,12 +264,16 @@ public class OptionsTab extends Fragment {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            showDate = (TextView) getActivity().findViewById(R.id.dateShow);
+
             showDate.setText("Date: " + dayOfMonth + "/" + monthOfYear + "/" + year);
             showDate.setVisibility(View.VISIBLE);
             gotDate = new int[]{dayOfMonth, monthOfYear, year};
-
-
         }
     };
+
+//    public interface OnDateSetListener {
+//        public void onDateSet(int[] gotDate);
+//    }
+
 }
+

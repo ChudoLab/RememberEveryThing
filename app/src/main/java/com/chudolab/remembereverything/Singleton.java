@@ -20,6 +20,7 @@ public class Singleton {
         this.taskNotes = new ArrayList<>();
         this.toDoNotes = new ArrayList<>();
         this.subjects = new ArrayList<>();
+            subjects.add("Thoughts"); // default topic
     }
 
     public static Singleton getInstance() {

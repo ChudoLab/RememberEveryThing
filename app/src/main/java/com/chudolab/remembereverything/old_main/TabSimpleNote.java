@@ -73,7 +73,6 @@
 //                if(existingTopics.size()!=0) {
 //                    for (int i = 0; i < existingTopics.size(); i++) {
 //
-//
 //                        if (existingTopics.get(i).equals(newTopicResult) != true) {
 //                            existingTopics.add(newTopicResult);
 //                            Log.e("added", newTopicResult);
