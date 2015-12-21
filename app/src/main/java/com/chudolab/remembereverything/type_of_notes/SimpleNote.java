@@ -12,8 +12,5 @@ public class SimpleNote extends Note {
 
     }
 
-    @Override
-    public String getDescription() {
-        return this.getSubject();
-    }
+
 }

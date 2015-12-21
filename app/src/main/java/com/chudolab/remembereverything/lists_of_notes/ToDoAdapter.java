@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.chudolab.remembereverything.R;
+import com.chudolab.remembereverything.Singleton;
 
 import java.util.ArrayList;
 
@@ -46,16 +47,23 @@ public class  ToDoAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layoutOfNote = inflater.inflate(idOfNoteView, parent, false);
 
-        CheckBox cbDoing = (CheckBox) layoutOfNote.findViewById(R.id.checkBox);
-        cbDoing.setText(listOfDoing.get(position) + listOfDoing.size() + " " + position);
+        final CheckBox cbDoing = (CheckBox) layoutOfNote.findViewById(R.id.checkBox);
+        cbDoing.setText(listOfDoing.get(position));
         cbDoing.setTextColor(Color.BLACK);
+        cbDoing.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        if (cbDoing.isChecked() == true) {
 
+        }
+    }
+});
 
 
         return layoutOfNote;

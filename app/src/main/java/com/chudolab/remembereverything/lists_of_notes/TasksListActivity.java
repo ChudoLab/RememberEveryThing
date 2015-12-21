@@ -54,7 +54,7 @@ public class TasksListActivity extends DrawerAppCompatActivity {
         GridLayoutManager linearLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         rvTasks.setLayoutManager(linearLayoutManager);
         taskList = Singleton.getInstance().getTaskNotes();
-        adapter = new NoteMovieAdapter(this, "Task", taskList, R.layout.task_note_for_list, R.id.tvNameTask, R.id.tvDateTask, R.id.tvTextTask);
+        adapter = new NoteMovieAdapter(this, "Task", taskList, R.layout.task_note_for_list, R.id.tvNameTask, R.id.tvSubjectTask, R.id.tvTextTask);
         rvTasks.setAdapter(adapter);
         ItemTouchHelper.Callback callback = new NoteTouchHelper(adapter);
         ItemTouchHelper helper = new ItemTouchHelper(callback);
@@ -72,10 +72,11 @@ public class TasksListActivity extends DrawerAppCompatActivity {
         getMenuInflater().inflate(getToolbarMenu(), menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         menu.add("All");
+        int i = 0;
         for(String subject: Singleton.getInstance().getSubjects()){
-            menu.add(subject);
+            menu.add(0,i,i,subject);
+            i++;
         }
-
 
         return true;
     }
@@ -85,7 +86,7 @@ public class TasksListActivity extends DrawerAppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getTitle().equals("All")){
 
-            adapter = new NoteMovieAdapter(this, "Task", taskList, R.layout.task_note_for_list, R.id.tvNameTask, R.id.tvDateTask, R.id.tvTextTask);
+            adapter = new NoteMovieAdapter(this, "Task", taskList, R.layout.task_note_for_list, R.id.tvNameTask, R.id.tvSubjectTask, R.id.tvTextTask);
             rvTasks.setAdapter(adapter);
             ItemTouchHelper.Callback callback = new NoteTouchHelper(adapter);
             ItemTouchHelper helper = new ItemTouchHelper(callback);
@@ -106,7 +107,7 @@ public class TasksListActivity extends DrawerAppCompatActivity {
             }
         }
 
-        adapter = new NoteMovieAdapter(this, "Task", notes, R.layout.task_note_for_list, R.id.tvNameTask, R.id.tvDateTask, R.id.tvTextTask);
+        adapter = new NoteMovieAdapter(this, "Task", notes, R.layout.task_note_for_list, R.id.tvNameTask, R.id.tvSubjectTask, R.id.tvTextTask);
         rvTasks.setAdapter(adapter);
         ItemTouchHelper.Callback callback = new NoteTouchHelper(adapter);
         ItemTouchHelper helper = new ItemTouchHelper(callback);

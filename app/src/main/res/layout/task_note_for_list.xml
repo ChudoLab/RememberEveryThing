@@ -8,6 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/editText"
+        android:text="subject: "
+        android:id="@+id/tvSubjectTask" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/editText"
         android:text="name: "
         android:id="@+id/tvNameTask" />
 
@@ -15,19 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/editText"
-        android:text="date: "
-        android:id="@+id/tvDateTask" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="date: "
-        android:id="@+id/tvTimeTask" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/editText"
         android:text="text: "
         android:id="@+id/tvTextTask" />
-
 
 </LinearLayout>

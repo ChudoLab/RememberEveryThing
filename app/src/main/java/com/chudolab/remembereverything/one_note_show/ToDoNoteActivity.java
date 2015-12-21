@@ -30,7 +30,7 @@ public class ToDoNoteActivity extends AppCompatActivity {
         text = (EditText) findViewById(R.id.etTextOfSimpleNote);
 
         name.setText(Singleton.getInstance().getToDoNotes().get(position).getName());
-        period.setText(Singleton.getInstance().getToDoNotes().get(position).getDescription());
+        period.setText(Singleton.getInstance().getToDoNotes().get(position).getSubject());
         text.setText(Singleton.getInstance().getToDoNotes().get(position).getText());
         name.setTextColor(Color.BLACK);
         text.setTextColor(Color.BLACK);

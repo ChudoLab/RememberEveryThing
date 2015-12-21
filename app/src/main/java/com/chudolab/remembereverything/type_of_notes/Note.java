@@ -77,5 +77,5 @@ abstract public class Note {
         this.objectId = objectId;
     }
 
-    public abstract String getDescription();
+    //public abstract String getDescription();
 }

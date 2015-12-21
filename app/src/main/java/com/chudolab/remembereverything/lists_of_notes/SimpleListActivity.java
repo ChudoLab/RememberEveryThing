@@ -10,6 +10,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 
 import android.widget.ActionMenuView;
@@ -54,6 +55,8 @@ String subject;
 
         adapter = new NoteMovieAdapter(this, "Simple", simplesList, R.layout.simple_note_for_list, R.id.tvSimpleName, R.id.tvSimpleDesc, R.id.tvSimpleText);
         rvSimpls.setAdapter(adapter);
+
+
         ItemTouchHelper.Callback callback = new NoteTouchHelper(adapter);
 
         ItemTouchHelper helper = new ItemTouchHelper(callback);
@@ -65,11 +68,11 @@ String subject;
         getMenuInflater().inflate(getToolbarMenu(), menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         menu.add("All");
+        int i=0;
         for(String subject: Singleton.getInstance().getSubjects()){
-            menu.add(subject);
+            menu.add(0,i,i,subject);
+            i++;
         }
-
-
         return true;
     }
 
@@ -80,11 +83,11 @@ String subject;
             adapter = new NoteMovieAdapter(this, "Simple", simplesList, R.layout.simple_note_for_list, R.id.tvSimpleName, R.id.tvSimpleDesc, R.id.tvSimpleText);
             rvSimpls.setAdapter(adapter);
             ItemTouchHelper.Callback callback = new NoteTouchHelper(adapter);
-
             ItemTouchHelper helper = new ItemTouchHelper(callback);
             helper.attachToRecyclerView(rvSimpls);
             adapter.notifyDataSetChanged();
         }else{
+
             getNotesWhithSubject(item.getItemId());}
         return super.onOptionsItemSelected(item);
 
@@ -92,9 +95,8 @@ String subject;
     public void getNotesWhithSubject(int position){
         ArrayList<Note> notes = new ArrayList<>();
         subject=Singleton.getInstance().getSubjects().get(position);
-
         for(Note note: Singleton.getInstance().getSimpleNotes()){
-            if(((SimpleNote)note).getSubject().equalsIgnoreCase(subject)){
+            if(note.getSubject().equalsIgnoreCase(subject)){
                 notes.add(note);
             }
         }
