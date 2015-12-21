@@ -29,7 +29,9 @@ import com.chudolab.remembereverything.CurrentTodoAdapter;
 import com.chudolab.remembereverything.R;
 import com.chudolab.remembereverything.Singleton;
 import com.chudolab.remembereverything.options.AlarmReceiver;
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -64,7 +66,7 @@ public class CurrentNoteTab extends Fragment {
         currentTodoList.setAdapter(toDoAdapter);
 
         existingTopics = Singleton.getInstance().getSubjects();
-        
+
         topicAdapter = new ArrayAdapter<String>(getContext(),
                 R.layout.support_simple_spinner_dropdown_item, existingTopics);
         topicAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -104,12 +106,13 @@ public class CurrentNoteTab extends Fragment {
                     po = new ParseObject("ToDoNotes");
                     saveAsTodo(po);
                 }
-                if (wantName.isChecked()) {
-                    po.put("name", gotName(resCurrentNote));
-                }
                 if (wantTopic.isChecked()) { //topic checked
                     po.put("subject", getTopic(gotTopic));
+                } else {
+                    po.put("subject", existingTopics.get(0));
                 }
+
+                po.put("name", gotName(resCurrentNote));
                 po.put("user", ParseUser.getCurrentUser());
                 po.saveInBackground();
                 getActivity().finish();
@@ -136,9 +139,9 @@ public class CurrentNoteTab extends Fragment {
                             String currentNoteId = po.getObjectId();
                             Log.e("current Id", currentNoteId);
 
-                            if (!resCurrentNote.isEmpty()) {
+                            if (!ifTodo.isChecked()) {
                                 saveAsTask(resCurrentNote, currentNoteId);
-                            } else if (ifTodo.isChecked()) {
+                            } else {
                                 ArrayList<CheckBox> temp = toDoAdapter.getListOfTodo();
                                 String todoInLine = new String();
                                 for (int i = 0; i < temp.size(); i++) {
@@ -146,10 +149,11 @@ public class CurrentNoteTab extends Fragment {
                                     todoInLine += (" ");
                                 }
                                 saveAsTask(todoInLine, currentNoteId);
+
                             }
 
                         } else {
-                            Toast.makeText(getContext(), "Error ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -161,7 +165,6 @@ public class CurrentNoteTab extends Fragment {
     public ParseObject saveAsSimple(ParseObject po, String resCurrentNote) {
 
         po.put("text", resCurrentNote);
-
 
         return po;
     }
@@ -215,18 +218,31 @@ public class CurrentNoteTab extends Fragment {
 
             sendToCalendar(name, hour, minute, year, month, day, description);
         }
+        getActivity().finish();
     }
 
     public String getTopic(String gotTopic) {
 
         if (!gotTopic.isEmpty()) { // added topic
             if (existingTopics.size() != 0) { //looking for same topic
+                boolean ifExists = false;
                 for (int i = 0; i < existingTopics.size(); i++) {
                     if (!existingTopics.get(i).equals(gotTopic)) {
-                        existingTopics.add(gotTopic);
-                        Singleton.getInstance().setSubjects(existingTopics);
-                        topicAdapter.notifyDataSetChanged();
+                        ifExists = false;
+                    } else {
+                        ifExists = true;
+                        break;
                     }
+
+                }
+                if (!ifExists) {
+                    existingTopics.add(gotTopic);
+                    Singleton.getInstance().setSubjects(existingTopics);
+                    topicAdapter.notifyDataSetChanged();
+                    ParseObject po1 = new ParseObject("Subjects");
+                    po1.put("subject", gotTopic);
+                    po1.put("user", ParseUser.getCurrentUser());
+                    po1.saveInBackground();
                 }
             }
         } else { // getting from spinner
@@ -267,7 +283,7 @@ public class CurrentNoteTab extends Fragment {
 
         Intent intent = new Intent(getActivity(), AlarmReceiver.class);
 //        int noteID = Integer.parseInt(currentNoteId);
-        intent.putExtra("noteID",10);
+        intent.putExtra("noteID", 10);
         intent.putExtra("currentNoteText", currentNoteText);
 
         Calendar calendar = Calendar.getInstance();

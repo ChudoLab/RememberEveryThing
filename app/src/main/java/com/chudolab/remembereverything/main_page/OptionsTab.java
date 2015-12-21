@@ -113,16 +113,6 @@ public class OptionsTab extends Fragment {
         Spinner spinner = (Spinner) getActivity().findViewById(R.id.existingTopics);
         spinner.setAdapter(topicAdapter);
 
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//            }
-//
-//        });
 
         wantTopic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -172,7 +162,7 @@ public class OptionsTab extends Fragment {
                     showDate.setVisibility(View.GONE);
                     showDate.setText("");
                     calendarShow.setVisibility(View.GONE);
-                    gotDate = null;
+
                 }
             }
         });
@@ -270,10 +260,6 @@ public class OptionsTab extends Fragment {
             gotDate = new int[]{dayOfMonth, monthOfYear, year};
         }
     };
-
-//    public interface OnDateSetListener {
-//        public void onDateSet(int[] gotDate);
-//    }
 
 }
 

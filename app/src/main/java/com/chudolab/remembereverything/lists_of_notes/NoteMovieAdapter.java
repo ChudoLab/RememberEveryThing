@@ -10,7 +10,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -208,8 +210,9 @@ public class NoteMovieAdapter extends RecyclerView.Adapter<NoteMovieAdapter.View
             }else{
                 tvNoteName.setText(note.getName());
                 lvDoing.setAdapter(new ToDoAdapter(context, R.layout.doing_for_list,  ((ToDoNote)note).getDoing()));
+                }
+
             }
 
         }
     }
-}
