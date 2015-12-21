@@ -38,15 +38,15 @@
     </style>
 
     <style name="cardHolderLayout" parent="Theme.AppCompat.Light">
-        <item name="android:paddingBottom">12dp</item>
-        <item name="android:paddingRight">12dp</item>
-        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
         <item name="android:background">@color/colorCardHolderBack</item>
     </style>
 
     <style name="card" parent="Theme.AppCompat.Light">
         <item name="android:padding">8dp</item>
-        <item name="android:layout_margin">12dp</item>
+        <item name="android:layout_margin">8dp</item>
         <item name="android:background">@color/colorBackground</item>
     </style>
 

@@ -23,8 +23,15 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="100dp"
+        android:visibility="gone"
         android:layout_below="@id/tvToDoName"
         android:id="@+id/lvDoing">
     </ListView>
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/todoLayout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+    </LinearLayout>
 
 </GridLayout>

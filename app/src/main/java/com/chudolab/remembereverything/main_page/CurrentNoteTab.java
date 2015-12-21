@@ -119,9 +119,9 @@ public class CurrentNoteTab extends Fragment {
             } else {  //TASK NOTE
                 po = new ParseObject("TaskNotes");
 
-                if (wantName.isChecked()) {
-                    po.put("name", gotName(resCurrentNote));
-                }
+
+                po.put("name", gotName(resCurrentNote));
+
                 if (wantTopic.isChecked()) { //topic checked
                     po.put("subject", getTopic(gotTopic));
                 }

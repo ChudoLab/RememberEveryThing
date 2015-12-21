@@ -13,12 +13,23 @@ public class ToDoNote extends Note {
     private ArrayList<String> doing;
     private ArrayList<Boolean> doingBoolean;
 
-    public ToDoNote(String id, Date dateOfApdate, Date dateOfcreate, String name,String subject, String text, int period, ArrayList doing) {
+
+
+    public ToDoNote(String id, Date dateOfApdate, Date dateOfcreate, String name,String subject, String text, int period, ArrayList doing,ArrayList doingBoolean) {
         super(id, dateOfApdate, dateOfcreate, name, subject,text);
         this.period = period;
         this.doing = doing;
+        this.doingBoolean=doingBoolean;
+
     }
 
+    public ArrayList<Boolean> getDoingBoolean() {
+        return doingBoolean;
+    }
+
+    public void setDoingBoolean(ArrayList<Boolean> doingBoolean) {
+        this.doingBoolean = doingBoolean;
+    }
     public int getPeriod() {
         return period;
     }
