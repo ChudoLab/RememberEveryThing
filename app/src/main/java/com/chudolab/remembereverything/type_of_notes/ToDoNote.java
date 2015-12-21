@@ -35,8 +35,4 @@ public class ToDoNote extends Note {
         this.doing = doing;
     }
 
-    @Override
-    public String getDescription() {
-        return "" + this.getPeriod();
-    }
 }

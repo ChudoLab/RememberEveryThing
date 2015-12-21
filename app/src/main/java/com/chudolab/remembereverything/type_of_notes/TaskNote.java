@@ -34,9 +34,4 @@ public class TaskNote extends Note {
         this.date = date;
     }
 
-    @Override
-    public String getDescription() {
-       return "date:";
-//        return "date: " + this.getDate().get(0)+"."+this.getDate().get(1)+" time: "+this.getTime().get(0)+"."+this.getTime().get(1);
-    }
 }

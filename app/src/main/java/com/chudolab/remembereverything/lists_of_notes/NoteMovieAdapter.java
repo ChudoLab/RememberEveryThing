@@ -9,10 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +36,7 @@ public class NoteMovieAdapter extends RecyclerView.Adapter<NoteMovieAdapter.View
     private Context context;
     private int idOfNoteView;
     private int idOfNoteName;
-    private int idOfNoteInform;
+    private int idOfNoteSubject;
     private int idOfNoteText;
     public ArrayList<Note> listOfNotes;
     private int idOfDoingList;
@@ -53,11 +50,11 @@ public class NoteMovieAdapter extends RecyclerView.Adapter<NoteMovieAdapter.View
     }
 
 
-    public NoteMovieAdapter(Context context,String tipeOfNote, ArrayList<Note> listOfNotes, int idOfNoteView, int idOfNoteName, int idOfNoteInform, int idOfNoteText) {
+    public NoteMovieAdapter(Context context,String tipeOfNote, ArrayList<Note> listOfNotes, int idOfNoteView, int idOfNoteName, int idOfNoteSubject, int idOfNoteText) {
         this.context = context;
         this.idOfNoteView = idOfNoteView;
         this.idOfNoteName = idOfNoteName;
-        this.idOfNoteInform = idOfNoteInform;
+        this.idOfNoteSubject = idOfNoteSubject;
         this.idOfNoteText = idOfNoteText;
         this.listOfNotes = listOfNotes;
         this.idOfDoingList=0;
@@ -70,11 +67,11 @@ public class NoteMovieAdapter extends RecyclerView.Adapter<NoteMovieAdapter.View
             noteActivity= ToDoNoteActivity.class;
         }
     }
-    public NoteMovieAdapter(Context context,String tipeOfNote, int idOfNoteView, int idOfNoteName, int idOfNoteInform, int idOfNoteText) {
+    public NoteMovieAdapter(Context context,String tipeOfNote, int idOfNoteView, int idOfNoteName, int idOfNoteSubject, int idOfNoteText) {
         this.context = context;
         this.idOfNoteView = idOfNoteView;
         this.idOfNoteName = idOfNoteName;
-        this.idOfNoteInform = idOfNoteInform;
+        this.idOfNoteSubject = idOfNoteSubject;
         this.idOfNoteText = idOfNoteText;
         this.listOfNotes = new ArrayList<Note>();
         this.idOfDoingList=0;
@@ -170,7 +167,7 @@ public class NoteMovieAdapter extends RecyclerView.Adapter<NoteMovieAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder{
         public final TextView tvNoteName;
         public final TextView tvText;
-        public final TextView tvNoteDescription;
+        public final TextView tvNoteSubject;
         public final ListView lvDoing;
 
         //public final ImageView doing;
@@ -182,20 +179,23 @@ public class NoteMovieAdapter extends RecyclerView.Adapter<NoteMovieAdapter.View
 
                 tvText = (TextView) view.findViewById(idOfNoteText);
                 lvDoing=null;
-                tvNoteDescription = (TextView) view.findViewById(idOfNoteInform);
+                tvNoteSubject = (TextView) view.findViewById(idOfNoteSubject);
             }
             else {
-                tvNoteDescription=null;
+                tvNoteSubject = (TextView) view.findViewById(R.id.tvToDoSubject);
                 tvText=null;
                 tvNoteName = (TextView) view.findViewById(idOfNoteName);
                 lvDoing = (ListView) view.findViewById(R.id.lvDoing);
             }
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                  Intent intent = new Intent(context, noteActivity);
-                    intent.putExtra("position",getAdapterPosition());
-                   context.startActivity(intent);
+            //edit!!!
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                  Intent intent = new Intent(context, noteActivity);
+//                    intent.putExtra("position",getAdapterPosition());
+//                   context.startActivity(intent);
+//
+//                }});
 
                 }});
 
@@ -205,14 +205,25 @@ public class NoteMovieAdapter extends RecyclerView.Adapter<NoteMovieAdapter.View
         public void bindMovie(Note note){
             if (idOfDoingList == 0) {
                 tvNoteName.setText("Name: "+note.getName());
-                tvText.setText("Topic: "+note.getText());
-                tvNoteDescription.setText(note.getDescription());
+                tvText.setText("Text: "+note.getText());
+                tvNoteSubject.setText("Subject: "+note.getSubject());
             }else{
-                tvNoteName.setText(note.getName());
-                lvDoing.setAdapter(new ToDoAdapter(context, R.layout.doing_for_list,  ((ToDoNote)note).getDoing()));
+                tvNoteName.setText("Name: " + note.getName());
+                tvNoteSubject.setText("Subject: "+note.getSubject());
+                for (int i= 0; i<((ToDoNote)note).getDoing().size();i++){
+                    CheckBox cb = new CheckBox(getContext());
+
                 }
 
+               // lvDoing.setAdapter(new ToDoAdapter(context, R.layout.doing_for_list, ((ToDoNote) note).getDoing()));
+//                lvDoing.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        view.findViewById(R.id.)
+//                    }
+//                });
             }
 
         }
     }
+}

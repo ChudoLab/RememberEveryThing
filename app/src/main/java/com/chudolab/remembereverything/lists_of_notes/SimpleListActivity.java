@@ -10,6 +10,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 
 import android.widget.ActionMenuView;
@@ -65,10 +66,9 @@ String subject;
         getMenuInflater().inflate(getToolbarMenu(), menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         menu.add("All");
-        int i = 0;
+        int i=0;
         for(String subject: Singleton.getInstance().getSubjects()){
-            menu.add(subject);
-            menu.add(0,i, i,subject);
+            menu.add(0,i,i,subject);
             i++;
         }
 
@@ -97,7 +97,7 @@ String subject;
         subject=Singleton.getInstance().getSubjects().get(position);
 
         for(Note note: Singleton.getInstance().getSimpleNotes()){
-            if(((SimpleNote)note).getSubject().equalsIgnoreCase(subject)){
+            if(note.getSubject().equalsIgnoreCase(subject)){
                 notes.add(note);
             }
         }
