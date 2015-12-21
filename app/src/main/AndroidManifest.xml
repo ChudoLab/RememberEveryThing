@@ -16,34 +16,29 @@
         android:theme="@style/AppBaseTheme">
         <activity
             android:name=".main_page.MainPageActivity"
-            android:launchMode="singleInstance"
-            android:windowSoftInputMode="adjustResize">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
+            android:windowSoftInputMode="adjustNothing"
+            android:launchMode="singleInstance">
+            <!--android:windowSoftInputMode="adjustResize"-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
         </activity>
         <activity android:name=".LoginSingupActivity">
 
         </activity>
-        <activity
-            android:name=".Main2Activity"
-            android:windowSoftInputMode="adjustResize">
+        <activity android:name=".Main2Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
-        <activity
-            android:name=".old_main.MainActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            <activity
+                android:name=".old_main.MainActivity"
+                android:windowSoftInputMode="adjustResize" />
 
         </activity>
         <activity android:name=".lists_of_notes.SimpleListActivity" />

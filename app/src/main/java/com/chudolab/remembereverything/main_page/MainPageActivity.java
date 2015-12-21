@@ -172,7 +172,8 @@ public class MainPageActivity extends DrawerAppCompatActivity {
                                 list.get(i).getString("subject"),
                                 list.get(i).getString("text"),
                                 list.get(i).getInt("period"),
-                                ((ArrayList) list.get(i).getList("doing"))
+                                ((ArrayList) list.get(i).getList("doing")),
+                                (ArrayList)list.get(i).getList("doingBoolean")
                         );
                         toDoList.add(toDoNote);
                     }

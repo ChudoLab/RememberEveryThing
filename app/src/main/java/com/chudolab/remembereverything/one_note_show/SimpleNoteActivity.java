@@ -47,7 +47,7 @@ public class SimpleNoteActivity extends AppCompatActivity {
         text = (EditText) findViewById(R.id.etTextOfSimpleNote);
 
         name.setText(note.getName());
-        subject.setText(note.getDescription());
+        subject.setText(note.getSubject());
         text.setText(note.getText());
         name.setTextColor(Color.BLACK);
         text.setTextColor(Color.BLACK);

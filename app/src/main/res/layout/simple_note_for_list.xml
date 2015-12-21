@@ -6,18 +6,18 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvSimpleName"
-        style="@style/editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="name: " />
-
-    <TextView
         android:id="@+id/tvSimpleDesc"
         style="@style/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="subject : " />
+
+    <TextView
+        android:id="@+id/tvSimpleName"
+        style="@style/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="name: " />
 
     <TextView
         android:id="@+id/tvSimpleText"

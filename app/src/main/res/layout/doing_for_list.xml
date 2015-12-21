@@ -8,22 +8,22 @@
         android:text=""
         android:id="@+id/checkBox" />
 
-    <Button
-        android:id="@+id/addTodo"
-        android:visibility="visible"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="40dp"
-        android:background="@drawable/plus_circle_outline"
-        android:layout_width="25dp"
-        android:alpha="0.6"
-        android:layout_height="25dp"/>
-    <Button
-        android:id="@+id/deleteTodo"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/close"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:alpha="0.6" />
+    <!--<Button-->
+        <!--android:id="@+id/addTodo"-->
+        <!--android:visibility="visible"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginRight="40dp"-->
+        <!--android:background="@drawable/plus_circle_outline"-->
+        <!--android:layout_width="25dp"-->
+        <!--android:alpha="0.6"-->
+        <!--android:layout_height="25dp"/>-->
+    <!--<Button-->
+        <!--android:id="@+id/deleteTodo"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:background="@drawable/close"-->
+        <!--android:layout_width="25dp"-->
+        <!--android:layout_height="25dp"-->
+        <!--android:alpha="0.6" />-->
 </RelativeLayout>

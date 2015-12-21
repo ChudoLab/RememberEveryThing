@@ -64,18 +64,28 @@ public class ToDoListActivity extends DrawerAppCompatActivity {
     }
 
     protected void onStop() {
-        super.onStop();
 
+        for(Note note: Singleton.getInstance().getToDoNotes()){
+            ParseObject object = ParseObject.createWithoutData("ToDoNotes", note.getObjectId());
+            object.put("doingBoolean", ((ToDoNote) note).getDoingBoolean());
+            object.saveInBackground();
+        //System.out.println("STOOOOOOOOPPPPP");
+        }
+
+//
+//        object.saveInBackground();
         DrawerLayout dr = (DrawerLayout) findViewById(R.id.drawerLayout);
         dr.closeDrawers();
-
+        super.onStop();
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(getToolbarMenu(), menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         menu.add("All");
+        int i=0;
         for(String subject: Singleton.getInstance().getSubjects()){
-            menu.add(subject);
+            menu.add(0,i,i,subject);
+            i++;
         }
 
 
@@ -122,7 +132,6 @@ public class ToDoListActivity extends DrawerAppCompatActivity {
     public Toolbar getToolbar() {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar_lists);
         myToolbar.setTitle("Lists");
-
         return myToolbar;
     }
 
