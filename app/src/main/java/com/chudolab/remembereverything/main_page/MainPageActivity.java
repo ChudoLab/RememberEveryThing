@@ -44,7 +44,6 @@ public class MainPageActivity extends DrawerAppCompatActivity {
     ArrayList<Note> simplesList;
     ArrayList<Note> toDoList;
     ArrayList<Note> taskList;
-    ArrayList<CheckBox> todoCheckbox;
     ArrayList subjectList;
 
     @Override

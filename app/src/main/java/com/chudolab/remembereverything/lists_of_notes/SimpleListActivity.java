@@ -65,8 +65,11 @@ String subject;
         getMenuInflater().inflate(getToolbarMenu(), menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         menu.add("All");
+        int i = 0;
         for(String subject: Singleton.getInstance().getSubjects()){
             menu.add(subject);
+            menu.add(0,i, i,subject);
+            i++;
         }
 
 
