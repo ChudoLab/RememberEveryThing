@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/card"
+
+<android.support.v7.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:id="@+id/cv"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TextView
         android:id="@+id/tvSimpleDesc"
         style="@style/editText"
@@ -17,13 +20,17 @@
         style="@style/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="name: " />
+        android:text="name: "
+        android:layout_below="@id/tvSimpleDesc"
+       />
 
     <TextView
         android:id="@+id/tvSimpleText"
         style="@style/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="text: " />
-
-</LinearLayout>
+        android:text="text: "
+        android:layout_below="@id/tvSimpleName"
+       />
+</RelativeLayout>
+</android.support.v7.widget.CardView>
